@@ -36,7 +36,7 @@ catch (e) {
 ## dead code elimination
 
 There is an article that suggest that [Elm does dead code elimination](https://elm-lang.org/news/small-assets-without-the-headache)
-but then why does the *buttons/* app has the following unused functions and objects?
+but then why does the *buttons/* app have the following unused functions and objects?
 (only listing the first 15 here - there is a lot more)
 
 ```js
