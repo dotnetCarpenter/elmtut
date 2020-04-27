@@ -16,11 +16,12 @@ main =
   Browser.sandbox { init = init, update = update, view = view }
 
 -- MODEL
+initialValue = 100
 
 type alias Model = Int
 
 init : Model
-init = 0
+init = initialValue
 
 -- UPDATE
 
@@ -48,7 +49,7 @@ update msg model =
 
     Decrement10 -> decreaser model 10
 
-    Reset -> 0
+    Reset -> initialValue
 
 -- VIEW
 
