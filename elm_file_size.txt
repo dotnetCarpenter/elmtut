@@ -1,0 +1,4 @@
+Total	Unused	%	Command
+
+111550	63444	56.9%	elm make
+111550	63444	56.9%	elm make --optimize
