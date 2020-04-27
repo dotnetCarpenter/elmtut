@@ -80,7 +80,19 @@ viewInput t p v toMsg =
 
 viewValidation : Model -> Html msg
 viewValidation model =
-  if model.password == model.passwordAgain then
-    div [ style "color" "green" ] [ text "OK" ]
-  else
-    div [ style "color" "red" ] [ text "Passwords do not match!" ]
+  let
+
+    valid: Bool
+    valid = false
+
+    if model.password == model.passwordAgain then
+      valid = true
+
+    if String.Length model.password > 8 then
+      valid = true
+
+  in
+    if valid then
+      div [ style "color" "green" ] [ text "OK" ]
+    else
+      div [ style "color" "red" ] [ text "Passwords do not match!" ]
