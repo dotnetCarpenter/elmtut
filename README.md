@@ -8,5 +8,5 @@
 2. vscode `elm.json` schema is missing and version information is not fetched from registry (https://package.elm-lang.org/all-packages)
     1. Is there any way to get version information for a single package?
 3. lots of links are not correct - mainly pointing to https://github.com/elm-lang/ instead of https://github.com/elm/
-
-
+    1. ... start writing down URLs...
+4. `elm` CLI does not have tabl completion for commands or flags

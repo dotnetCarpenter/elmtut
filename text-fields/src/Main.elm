@@ -10,6 +10,7 @@ import Browser
 import Html exposing (Html, Attribute, div, input, text)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onInput)
+import Debug
 
 
 -- MAIN
@@ -43,7 +44,12 @@ update msg model =
 -- VIEW
 view : Model -> Html Msg
 view model =
-  div []
-    [ input [ placeholder "Text to reverse", value model.content, onInput Change ] []
-    , div [] [ text (String.reverse model.content) ]
+  div [ ]
+    [
+      input [ placeholder "Text to reverse", value model.content, onInput Change ] []
+    , div []
+      [
+        text (String.reverse model.content)
+      , text (" " ++ Debug.toString (String.length model.content))
+      ]
     ]
