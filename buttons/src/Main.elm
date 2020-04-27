@@ -16,6 +16,7 @@ main =
   Browser.sandbox { init = init, update = update, view = view }
 
 -- MODEL
+initialValue: Int
 initialValue = 100
 
 type alias Model = Int

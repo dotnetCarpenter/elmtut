@@ -4357,7 +4357,7 @@ function _Browser_load(url)
 }
 var $author$project$Main$Model = F3(
 	function (name, password, passwordAgain) {
-		return {H: name, E: password, F: passwordAgain};
+		return {H: name, A: password, F: passwordAgain};
 	});
 var $author$project$Main$init = A3($author$project$Main$Model, '', '', '');
 var $elm$core$Basics$EQ = 1;
@@ -5176,7 +5176,7 @@ var $author$project$Main$update = F2(
 				var password = msg.a;
 				return _Utils_update(
 					model,
-					{E: password});
+					{A: password});
 			default:
 				var password = msg.a;
 				return _Utils_update(
@@ -5254,21 +5254,13 @@ var $author$project$Main$viewInput = F4(
 				]),
 			_List_Nil);
 	});
+var $elm$core$Basics$neq = _Utils_notEqual;
 var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
 var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
 var $author$project$Main$viewValidation = function (model) {
-	return _Utils_eq(model.E, model.F) ? A2(
-		$elm$html$Html$div,
-		_List_fromArray(
-			[
-				A2($elm$html$Html$Attributes$style, 'color', 'green')
-			]),
-		_List_fromArray(
-			[
-				$elm$html$Html$text('OK')
-			])) : A2(
+	return (!_Utils_eq(model.A, model.F)) ? A2(
 		$elm$html$Html$div,
 		_List_fromArray(
 			[
@@ -5277,7 +5269,25 @@ var $author$project$Main$viewValidation = function (model) {
 		_List_fromArray(
 			[
 				$elm$html$Html$text('Passwords do not match!')
-			]));
+			])) : (($elm$core$String$length(model.A) < 8) ? A2(
+		$elm$html$Html$div,
+		_List_fromArray(
+			[
+				A2($elm$html$Html$Attributes$style, 'color', 'red')
+			]),
+		_List_fromArray(
+			[
+				$elm$html$Html$text('Password is too short! Must be above 8 characters.')
+			])) : A2(
+		$elm$html$Html$div,
+		_List_fromArray(
+			[
+				A2($elm$html$Html$Attributes$style, 'color', 'green')
+			]),
+		_List_fromArray(
+			[
+				$elm$html$Html$text('OK')
+			])));
 };
 var $author$project$Main$view = function (model) {
 	return A2(
@@ -5289,7 +5299,7 @@ var $author$project$Main$view = function (model) {
 		_List_fromArray(
 			[
 				A4($author$project$Main$viewInput, 'text', 'Name', model.H, $author$project$Main$Name),
-				A4($author$project$Main$viewInput, 'password', 'Password', model.E, $author$project$Main$Password),
+				A4($author$project$Main$viewInput, 'password', 'Password', model.A, $author$project$Main$Password),
 				A4($author$project$Main$viewInput, 'password', 'Re-enter Password', model.F, $author$project$Main$PasswordAgain),
 				$author$project$Main$viewValidation(model)
 			]));

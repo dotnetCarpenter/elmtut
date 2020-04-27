@@ -28,7 +28,6 @@ type alias Model =
   { name : String
   , password : String
   , passwordAgain : String
-  , valid: Bool
   }
 
 
@@ -79,16 +78,19 @@ viewInput t p v toMsg =
   input [ type_ t, placeholder p, value v, onInput toMsg ] []
 
 
+same : String -> String -> Bool
+same pw1 pw2 =
+  pw1 == pw2
+
+minLength : Int -> String -> Bool
+minLength n pw =
+  String.length pw > n
+
 viewValidation : Model -> Html msg
 viewValidation model =
-  case model of
-    model.password == model.passwordAgain ->
-      { model | valid = true }
-
-    String.Length model.password > 8 ->
-      { model | valid = true }
-
-  if model.valid then
-    div [ style "color" "green" ] [ text "OK" ]
-  else
+  if model.password /= model.passwordAgain then
     div [ style "color" "red" ] [ text "Passwords do not match!" ]
+  else if String.length model.password < 8 then
+    div [ style "color" "red" ] [ text "Password is too short! Must be above 8 characters." ]
+  else
+    div [ style "color" "green" ] [ text "OK" ]
