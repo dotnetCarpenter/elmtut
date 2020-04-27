@@ -11,7 +11,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onInput)
 
-
+import Debug
 
 -- MAIN
 
@@ -92,16 +92,29 @@ viewValidation model =
 
 validateStrongness : String -> Bool
 validateStrongness pw =
-  if String.isEmpty (String.foldl hasLower "" pw) then True
-  else if String.isEmpty (String.foldl hasUpper "" pw) then True
-  else False
+  test pw Char.isLower
+  && test pw Char.isUpper
+  && test pw Char.isDigit
 
+  -- (String.filter (\c -> Char.isLower c) pw |> String.isEmpty)
+  -- && (String.filter (\c -> Char.isUpper c) pw |> String.isEmpty)
+  -- &&  (String.filter (\c -> Char.isDigit c) pw |> String.isEmpty)
 
-hasLower : Char -> String -> String
-hasLower char accu =
-  if Char.isLower char then String.fromChar char else accu
+  -- Debug.log (String.foldl hasLower "" pw)
+  -- Debug.log (String.foldl hasUpper "" pw)
 
-hasUpper : Char -> String -> String
-hasUpper char accu =
-  if Char.isUpper char then String.fromChar char else accu
+  -- String.length (String.foldl hasLower "" pw) > 0
+  -- && String.length (String.foldl hasUpper "" pw) > 0
+
+test : String -> (Char -> Bool) -> Bool
+test s f =
+  String.filter f s |> String.isEmpty |> not
+
+-- hasLower : Char -> String -> String
+-- hasLower char accu =
+--   if Char.isLower char then String.fromChar char else accu
+
+-- hasUpper : Char -> String -> String
+-- hasUpper char accu =
+--   if Char.isUpper char then String.fromChar char else accu
 

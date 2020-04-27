@@ -5279,23 +5279,15 @@ var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
 var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
-var $elm$core$String$foldl = _String_foldl;
-var $elm$core$String$cons = _String_cons;
-var $elm$core$String$fromChar = function (_char) {
-	return A2($elm$core$String$cons, _char, '');
-};
-var $author$project$Main$hasLower = F2(
-	function (_char, accu) {
-		return $elm$core$Char$isLower(_char) ? $elm$core$String$fromChar(_char) : accu;
-	});
-var $author$project$Main$hasUpper = F2(
-	function (_char, accu) {
-		return $elm$core$Char$isUpper(_char) ? $elm$core$String$fromChar(_char) : accu;
+var $elm$core$String$filter = _String_filter;
+var $elm$core$Basics$not = _Basics_not;
+var $author$project$Main$test = F2(
+	function (s, f) {
+		return !$elm$core$String$isEmpty(
+			A2($elm$core$String$filter, f, s));
 	});
 var $author$project$Main$validateStrongness = function (pw) {
-	return $elm$core$String$isEmpty(
-		A3($elm$core$String$foldl, $author$project$Main$hasLower, '', pw)) ? true : ($elm$core$String$isEmpty(
-		A3($elm$core$String$foldl, $author$project$Main$hasUpper, '', pw)) ? true : false);
+	return A2($author$project$Main$test, pw, $elm$core$Char$isLower) && (A2($author$project$Main$test, pw, $elm$core$Char$isUpper) && A2($author$project$Main$test, pw, $elm$core$Char$isDigit));
 };
 var $author$project$Main$viewValidation = function (model) {
 	return ($elm$core$String$length(model.password) < 8) ? A2(
