@@ -38,7 +38,8 @@ Wondering while doing the exercise in https://guide.elm-lang.org/architecture/te
 previous examples or *forms/src/Main.elm* won't compile. The same for [text-fields](https://elm-lang.org/examples/text-fields)
 10. Wondering what `toMsg` is in *forms/src/Main.elm* and why a `Variant` is used as argument? e.i. `Name`.
 `(String -> msg)` must be `onInput`. Only the first 3 arguments are explained in https://guide.elm-lang.org/architecture/forms.html
-
+11. [The Elm Plugin](https://discourse.elm-lang.org/t/elm-plugin-for-visual-studio-code-0-10-0-and-new-language-server/5399) is a
+joy, but it does not work for *forms/src/Main.elm* hmm :sad: - restart vscode!
 
 
 ## dead code elimination

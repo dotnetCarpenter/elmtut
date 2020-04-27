@@ -13,7 +13,7 @@ debug:
 	@echo $(min)
 
 
-$(optimizedHtml): $(min)
+$(optimizedHtml): $(templateHtml)
 	@cp -v $(templateHtml) $(optimizedHtml)
 
 

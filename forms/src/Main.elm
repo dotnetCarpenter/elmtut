@@ -78,19 +78,30 @@ viewInput t p v toMsg =
   input [ type_ t, placeholder p, value v, onInput toMsg ] []
 
 
-same : String -> String -> Bool
-same pw1 pw2 =
-  pw1 == pw2
-
-minLength : Int -> String -> Bool
-minLength n pw =
-  String.length pw > n
-
 viewValidation : Model -> Html msg
 viewValidation model =
-  if model.password /= model.passwordAgain then
-    div [ style "color" "red" ] [ text "Passwords do not match!" ]
-  else if String.length model.password < 8 then
+  if String.length model.password < 8 then
     div [ style "color" "red" ] [ text "Password is too short! Must be above 8 characters." ]
+  else if validateStrongness model.password then
+    div [ style "color" "red" ] [ text "Password is too weak! Must contain  upper case, lower case, and numeric characters." ]
+  else if model.password /= model.passwordAgain then
+    div [ style "color" "red" ] [ text "Passwords do not match!" ]
   else
     div [ style "color" "green" ] [ text "OK" ]
+
+
+validateStrongness : String -> Bool
+validateStrongness pw =
+  if String.isEmpty (String.foldl hasLower "" pw) then True
+  else if String.isEmpty (String.foldl hasUpper "" pw) then True
+  else False
+
+
+hasLower : Char -> String -> String
+hasLower char accu =
+  if Char.isLower char then String.fromChar char else accu
+
+hasUpper : Char -> String -> String
+hasUpper char accu =
+  if Char.isUpper char then String.fromChar char else accu
+

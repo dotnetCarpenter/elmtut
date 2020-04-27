@@ -784,11 +784,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.L.z === region.Q.z)
+	if (region.L.A === region.Q.A)
 	{
-		return 'on line ' + region.L.z;
+		return 'on line ' + region.L.A;
 	}
-	return 'on lines ' + region.L.z + ' through ' + region.Q.z;
+	return 'on lines ' + region.L.A + ' through ' + region.Q.A;
 }
 
 
@@ -4357,7 +4357,7 @@ function _Browser_load(url)
 }
 var $author$project$Main$Model = F3(
 	function (name, password, passwordAgain) {
-		return {H: name, A: password, F: passwordAgain};
+		return {H: name, w: password, F: passwordAgain};
 	});
 var $author$project$Main$init = A3($author$project$Main$Model, '', '', '');
 var $elm$core$Basics$EQ = 1;
@@ -5176,7 +5176,7 @@ var $author$project$Main$update = F2(
 				var password = msg.a;
 				return _Utils_update(
 					model,
-					{A: password});
+					{w: password});
 			default:
 				var password = msg.a;
 				return _Utils_update(
@@ -5259,17 +5259,26 @@ var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
 var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
+var $elm$core$String$foldl = _String_foldl;
+var $elm$core$String$cons = _String_cons;
+var $elm$core$String$fromChar = function (_char) {
+	return A2($elm$core$String$cons, _char, '');
+};
+var $author$project$Main$hasLower = F2(
+	function (_char, accu) {
+		return $elm$core$Char$isLower(_char) ? $elm$core$String$fromChar(_char) : accu;
+	});
+var $author$project$Main$hasUpper = F2(
+	function (_char, accu) {
+		return $elm$core$Char$isUpper(_char) ? $elm$core$String$fromChar(_char) : accu;
+	});
+var $author$project$Main$validateStrongness = function (pw) {
+	return $elm$core$String$isEmpty(
+		A3($elm$core$String$foldl, $author$project$Main$hasLower, '', pw)) ? true : ($elm$core$String$isEmpty(
+		A3($elm$core$String$foldl, $author$project$Main$hasUpper, '', pw)) ? true : false);
+};
 var $author$project$Main$viewValidation = function (model) {
-	return (!_Utils_eq(model.A, model.F)) ? A2(
-		$elm$html$Html$div,
-		_List_fromArray(
-			[
-				A2($elm$html$Html$Attributes$style, 'color', 'red')
-			]),
-		_List_fromArray(
-			[
-				$elm$html$Html$text('Passwords do not match!')
-			])) : (($elm$core$String$length(model.A) < 8) ? A2(
+	return ($elm$core$String$length(model.w) < 8) ? A2(
 		$elm$html$Html$div,
 		_List_fromArray(
 			[
@@ -5278,6 +5287,24 @@ var $author$project$Main$viewValidation = function (model) {
 		_List_fromArray(
 			[
 				$elm$html$Html$text('Password is too short! Must be above 8 characters.')
+			])) : ($author$project$Main$validateStrongness(model.w) ? A2(
+		$elm$html$Html$div,
+		_List_fromArray(
+			[
+				A2($elm$html$Html$Attributes$style, 'color', 'red')
+			]),
+		_List_fromArray(
+			[
+				$elm$html$Html$text('Password is too weak! Must contain  upper case, lower case, and numeric characters.')
+			])) : ((!_Utils_eq(model.w, model.F)) ? A2(
+		$elm$html$Html$div,
+		_List_fromArray(
+			[
+				A2($elm$html$Html$Attributes$style, 'color', 'red')
+			]),
+		_List_fromArray(
+			[
+				$elm$html$Html$text('Passwords do not match!')
 			])) : A2(
 		$elm$html$Html$div,
 		_List_fromArray(
@@ -5287,7 +5314,7 @@ var $author$project$Main$viewValidation = function (model) {
 		_List_fromArray(
 			[
 				$elm$html$Html$text('OK')
-			])));
+			]))));
 };
 var $author$project$Main$view = function (model) {
 	return A2(
@@ -5299,7 +5326,7 @@ var $author$project$Main$view = function (model) {
 		_List_fromArray(
 			[
 				A4($author$project$Main$viewInput, 'text', 'Name', model.H, $author$project$Main$Name),
-				A4($author$project$Main$viewInput, 'password', 'Password', model.A, $author$project$Main$Password),
+				A4($author$project$Main$viewInput, 'password', 'Password', model.w, $author$project$Main$Password),
 				A4($author$project$Main$viewInput, 'password', 'Re-enter Password', model.F, $author$project$Main$PasswordAgain),
 				$author$project$Main$viewValidation(model)
 			]));

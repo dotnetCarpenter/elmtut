@@ -5279,17 +5279,26 @@ var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
 var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
+var $elm$core$String$foldl = _String_foldl;
+var $elm$core$String$cons = _String_cons;
+var $elm$core$String$fromChar = function (_char) {
+	return A2($elm$core$String$cons, _char, '');
+};
+var $author$project$Main$hasLower = F2(
+	function (_char, accu) {
+		return $elm$core$Char$isLower(_char) ? $elm$core$String$fromChar(_char) : accu;
+	});
+var $author$project$Main$hasUpper = F2(
+	function (_char, accu) {
+		return $elm$core$Char$isUpper(_char) ? $elm$core$String$fromChar(_char) : accu;
+	});
+var $author$project$Main$validateStrongness = function (pw) {
+	return $elm$core$String$isEmpty(
+		A3($elm$core$String$foldl, $author$project$Main$hasLower, '', pw)) ? true : ($elm$core$String$isEmpty(
+		A3($elm$core$String$foldl, $author$project$Main$hasUpper, '', pw)) ? true : false);
+};
 var $author$project$Main$viewValidation = function (model) {
-	return (!_Utils_eq(model.password, model.passwordAgain)) ? A2(
-		$elm$html$Html$div,
-		_List_fromArray(
-			[
-				A2($elm$html$Html$Attributes$style, 'color', 'red')
-			]),
-		_List_fromArray(
-			[
-				$elm$html$Html$text('Passwords do not match!')
-			])) : (($elm$core$String$length(model.password) < 8) ? A2(
+	return ($elm$core$String$length(model.password) < 8) ? A2(
 		$elm$html$Html$div,
 		_List_fromArray(
 			[
@@ -5298,6 +5307,24 @@ var $author$project$Main$viewValidation = function (model) {
 		_List_fromArray(
 			[
 				$elm$html$Html$text('Password is too short! Must be above 8 characters.')
+			])) : ($author$project$Main$validateStrongness(model.password) ? A2(
+		$elm$html$Html$div,
+		_List_fromArray(
+			[
+				A2($elm$html$Html$Attributes$style, 'color', 'red')
+			]),
+		_List_fromArray(
+			[
+				$elm$html$Html$text('Password is too weak! Must contain  upper case, lower case, and numeric characters.')
+			])) : ((!_Utils_eq(model.password, model.passwordAgain)) ? A2(
+		$elm$html$Html$div,
+		_List_fromArray(
+			[
+				A2($elm$html$Html$Attributes$style, 'color', 'red')
+			]),
+		_List_fromArray(
+			[
+				$elm$html$Html$text('Passwords do not match!')
 			])) : A2(
 		$elm$html$Html$div,
 		_List_fromArray(
@@ -5307,7 +5334,7 @@ var $author$project$Main$viewValidation = function (model) {
 		_List_fromArray(
 			[
 				$elm$html$Html$text('OK')
-			])));
+			]))));
 };
 var $author$project$Main$view = function (model) {
 	return A2(
