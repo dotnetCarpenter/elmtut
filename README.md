@@ -32,6 +32,12 @@ catch (e) {
 6. [summarize.sh](https://gist.github.com/evancz/fc6ff4995395a1643155593a182e2de7) does not work for Elm 0.19.1
     1. I hacked some small changes into [this one](./summarize.sh) and that works on my system (Windows WSL Ubuntu).
 7. First issue - how to type cast - solution: https://stackoverflow.com/questions/45621072/how-can-i-transform-an-int-into-html
+Wondering while doing the exercise in https://guide.elm-lang.org/architecture/text_fields.html
+8. Confused about how indentation matters, especially in the view code...
+9. [The online code editor](https://elm-lang.org/examples/forms) is missing `module Main exposing (..)`. I need to copy it from
+previous examples or *forms/src/Main.elm* won't compile. The same for [text-fields](https://elm-lang.org/examples/text-fields)
+10. Wondering what `toMsg` is in *forms/src/Main.elm* and why a `Variant` is used as argument? e.i. `Name`.
+`(String -> msg)` must be `onInput`. Only the first 3 arguments are explained in https://guide.elm-lang.org/architecture/forms.html
 
 
 
@@ -58,3 +64,8 @@ function _Debug_todoCase(moduleName, region, value)
 function _Debug_toString_UNUSED(value)
 function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 ```
+
+
+## backend
+
+Seems that the `elm reactor` server is written in Haskell https://github.com/elm/compiler/tree/master/builder/src
