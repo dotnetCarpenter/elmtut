@@ -5180,25 +5180,26 @@ var $elm$browser$Browser$sandbox = function (impl) {
 			view: impl.view
 		});
 };
-var $elm$core$Debug$todo = _Debug_todo;
+var $author$project$Main$increaser = F2(
+	function (model, n) {
+		return model + n;
+	});
 var $author$project$Main$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
 			case 'Increment':
-				return model + 1;
+				return A2($author$project$Main$increaser, model, 1);
+			case 'Increment10':
+				return A2($author$project$Main$increaser, model, 10);
 			case 'Decrement':
 				return model - 1;
 			default:
-				return _Debug_todo(
-					'Main',
-					{
-						start: {line: 43, column: 7},
-						end: {line: 43, column: 17}
-					})('not implemented');
+				return 0;
 		}
 	});
 var $author$project$Main$Decrement = {$: 'Decrement'};
 var $author$project$Main$Increment = {$: 'Increment'};
+var $author$project$Main$Increment10 = {$: 'Increment10'};
 var $author$project$Main$Reset = {$: 'Reset'};
 var $elm$html$Html$button = _VirtualDom_node('button');
 var $elm$html$Html$div = _VirtualDom_node('div');
@@ -5228,6 +5229,14 @@ var $author$project$Main$view = function (model) {
 		_List_fromArray(
 			[
 				A2(
+				$elm$html$Html$div,
+				_List_Nil,
+				_List_fromArray(
+					[
+						$elm$html$Html$text(
+						$elm$core$String$fromInt(model))
+					])),
+				A2(
 				$elm$html$Html$button,
 				_List_fromArray(
 					[
@@ -5236,14 +5245,6 @@ var $author$project$Main$view = function (model) {
 				_List_fromArray(
 					[
 						$elm$html$Html$text('minus')
-					])),
-				A2(
-				$elm$html$Html$div,
-				_List_Nil,
-				_List_fromArray(
-					[
-						$elm$html$Html$text(
-						$elm$core$String$fromInt(model))
 					])),
 				A2(
 				$elm$html$Html$button,
@@ -5259,11 +5260,27 @@ var $author$project$Main$view = function (model) {
 				$elm$html$Html$button,
 				_List_fromArray(
 					[
-						$elm$html$Html$Events$onClick($author$project$Main$Reset)
+						$elm$html$Html$Events$onClick($author$project$Main$Increment10)
 					]),
 				_List_fromArray(
 					[
-						$elm$html$Html$text('reset')
+						$elm$html$Html$text('plus 10')
+					])),
+				A2(
+				$elm$html$Html$div,
+				_List_Nil,
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Events$onClick($author$project$Main$Reset)
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('reset')
+							]))
 					]))
 			]));
 };
