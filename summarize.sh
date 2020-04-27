@@ -11,13 +11,12 @@ then
   exit 1
 fi
 
-if [ -z $(which elm) ] || [[ "$(elm --version)" != "0.19.*" ]]
+if [ -z $(which elm) ] || [[ "$(elm --version)" != "0.19.1" ]]
 then
 #  -a "$(elm --version)" != "0.19.*"
   echo "Error: need version 0.19 of 'elm' binary available on your PATH"
   exit
 fi
-exit
 
 ## ACTUALLY MEASURE THINGS
 
