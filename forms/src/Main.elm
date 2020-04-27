@@ -28,6 +28,7 @@ type alias Model =
   { name : String
   , password : String
   , passwordAgain : String
+  , valid: Bool
   }
 
 
@@ -80,19 +81,14 @@ viewInput t p v toMsg =
 
 viewValidation : Model -> Html msg
 viewValidation model =
-  let
+  case model of
+    model.password == model.passwordAgain ->
+      { model | valid = true }
 
-    valid: Bool
-    valid = false
+    String.Length model.password > 8 ->
+      { model | valid = true }
 
-    if model.password == model.passwordAgain then
-      valid = true
-
-    if String.Length model.password > 8 then
-      valid = true
-
-  in
-    if valid then
-      div [ style "color" "green" ] [ text "OK" ]
-    else
-      div [ style "color" "red" ] [ text "Passwords do not match!" ]
+  if model.valid then
+    div [ style "color" "green" ] [ text "OK" ]
+  else
+    div [ style "color" "red" ] [ text "Passwords do not match!" ]
