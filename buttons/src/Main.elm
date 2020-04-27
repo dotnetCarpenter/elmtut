@@ -29,9 +29,13 @@ type Msg
   | Decrement
   | Reset
   | Increment10
+  | Decrement10
 
 increaser : Model -> Int -> Model
 increaser model n = model + n
+
+decreaser : Model -> Int -> Model
+decreaser model n = model - n
 
 update : Msg -> Model -> Model
 update msg model =
@@ -42,6 +46,8 @@ update msg model =
 
     Decrement -> model - 1
 
+    Decrement10 -> decreaser model 10
+
     Reset -> 0
 
 -- VIEW
@@ -51,10 +57,12 @@ view model =
   div []
     [
       div [] [ text (String.fromInt model) ]
+    , button [ onClick Decrement10 ] [ text "minus 10" ]
     , button [ onClick Decrement ] [ text "minus" ]
     , button [ onClick Increment ] [ text "plus" ]
     , button [ onClick Increment10 ] [ text "plus 10" ]
-    , div [] [
-        button [ onClick Reset ] [ text "reset" ]
-    ]
+    , div []
+        [
+            button [ onClick Reset ] [ text "reset" ]
+        ]
     ]
