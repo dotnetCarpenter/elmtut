@@ -39,16 +39,15 @@ update msg model =
     Change newContent ->
       { model | content = newContent }
 
-
 -- VIEW
 view : Model -> Html Msg
 view model =
   div [ ]
     [
       input [ placeholder "Text to reverse", value model.content, onInput Change ] []
+    , text (" Text length: " ++ String.fromInt (String.length model.content))
     , div []
       [
         text (String.reverse model.content)
-      , text (" " ++ String.fromInt (String.length model.content))
       ]
     ]

@@ -32,22 +32,23 @@ type Msg
   | Increment10
   | Decrement10
 
-increaser : Model -> Int -> Model
-increaser model n = model + n
 
-decreaser : Model -> Int -> Model
-decreaser model n = model - n
+increaser : Int -> Model -> Model
+increaser n model = model + n
+
+decreaser : Int -> Model -> Model
+decreaser n model = model - n
 
 update : Msg -> Model -> Model
 update msg model =
   case msg of
-    Increment -> increaser model 1
+    Increment  -> increaser 1 model
 
-    Increment10 -> increaser model 10
+    Increment10 -> increaser 10 model
 
-    Decrement -> model - 1
+    Decrement -> decreaser 1 model
 
-    Decrement10 -> decreaser model 10
+    Decrement10 -> decreaser 10 model
 
     Reset -> initialValue
 

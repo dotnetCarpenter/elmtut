@@ -5162,24 +5162,24 @@ var $elm$browser$Browser$sandbox = function (impl) {
 		});
 };
 var $author$project$Main$decreaser = F2(
-	function (model, n) {
+	function (n, model) {
 		return model - n;
 	});
 var $author$project$Main$increaser = F2(
-	function (model, n) {
+	function (n, model) {
 		return model + n;
 	});
 var $author$project$Main$update = F2(
 	function (msg, model) {
 		switch (msg) {
 			case 0:
-				return A2($author$project$Main$increaser, model, 1);
+				return A2($author$project$Main$increaser, 1, model);
 			case 3:
-				return A2($author$project$Main$increaser, model, 10);
+				return A2($author$project$Main$increaser, 10, model);
 			case 1:
-				return model - 1;
+				return A2($author$project$Main$decreaser, 1, model);
 			case 4:
-				return A2($author$project$Main$decreaser, model, 10);
+				return A2($author$project$Main$decreaser, 10, model);
 			default:
 				return $author$project$Main$initialValue;
 		}

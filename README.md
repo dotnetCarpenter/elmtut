@@ -31,6 +31,8 @@ catch (e) {
 ```
 6. [summarize.sh](https://gist.github.com/evancz/fc6ff4995395a1643155593a182e2de7) does not work for Elm 0.19.1
     1. I hacked some small changes into [this one](./summarize.sh) and that works on my system (Windows WSL Ubuntu).
+7. First issue - how to type cast - solution: https://stackoverflow.com/questions/45621072/how-can-i-transform-an-int-into-html
+
 
 
 ## dead code elimination
