@@ -63,8 +63,22 @@ hello : Html msg
 hello =
   div [] [ text "Hello!" ]
 ```
+3. The interactive editor in the [Guide](https://guide.elm-lang.org/types/reading_types.html) is indispensable. It would be even more awesome if it allowed copy/paste.
+4. Normal anchor (hash) links does not work in the Guide. While headings do have IDs, the following
+https://guide.elm-lang.org/types/reading_types.html#type-annotations does not scroll to
+`<h2 id="type-annotations">Type Annotations</h2>`. I think it is because Elm apps are dynamic
+rendered and the browser can not scroll to an element that does not exist yet. A `scrollTo` function might be considered...
+5. *“You said argument powerLevel was an Int, but it is getting used as a String!”* is not the best example when the
+code example is
+```elm
+checkPower : Int -> String
+checkPower powerLevel =
+  if powerLevel > 9000 then "It's over 9000!!!" else "Meh"
+```
+6. *What is lower case types?* is explained in the Type Variables section - nice!
 
 
+----------------------------------------------------------
 
 ## dead code elimination
 
