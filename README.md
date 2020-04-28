@@ -40,7 +40,7 @@ previous examples or *forms/src/Main.elm* won't compile. The same for [text-fiel
 `(String -> msg)` must be `onInput`. Only the first 3 arguments are explained in https://guide.elm-lang.org/architecture/forms.html
 11. [The Elm Plugin](https://discourse.elm-lang.org/t/elm-plugin-for-visual-studio-code-0-10-0-and-new-language-server/5399) is a
 joy, but it does not work for *forms/src/Main.elm* hmm :sad: - restart vscode!
-12. I really miss a debugger - why oh why won't 9d3bc3e work!?? How do I `Debug.log` a Bool value?
+12. I really miss a debugger - why oh why won't [9d3bc3e](https://github.com/dotnetCarpenter/elmtut/blob/9d3bc3e751a97675c046b9442de05d2e2839006b/forms/src/Main.elm) work!?? How do I `Debug.log` a Bool value?
 
 ## dead code elimination
 
