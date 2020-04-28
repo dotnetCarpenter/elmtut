@@ -4369,12 +4369,11 @@ function _Browser_load(url)
 		}
 	}));
 }
-var $author$project$Main$Model = F4(
-	function (name, password, passwordAgain, valid) {
-		return {name: name, password: password, passwordAgain: passwordAgain, valid: valid};
+var $author$project$Main$Model = F3(
+	function (name, password, passwordAgain) {
+		return {name: name, password: password, passwordAgain: passwordAgain};
 	});
-var $elm$core$Basics$True = {$: 'True'};
-var $author$project$Main$init = A4($author$project$Main$Model, '', '', '', true);
+var $author$project$Main$init = A3($author$project$Main$Model, '', '', '');
 var $elm$core$Basics$EQ = {$: 'EQ'};
 var $elm$core$Basics$GT = {$: 'GT'};
 var $elm$core$Basics$LT = {$: 'LT'};
@@ -4842,6 +4841,7 @@ var $elm$core$Array$initialize = F2(
 			return A5($elm$core$Array$initializeHelp, fn, initialFromIndex, len, _List_Nil, tail);
 		}
 	});
+var $elm$core$Basics$True = {$: 'True'};
 var $elm$core$Result$isOk = function (result) {
 	if (result.$ === 'Ok') {
 		return true;
@@ -5274,22 +5274,22 @@ var $author$project$Main$viewInput = F4(
 				]),
 			_List_Nil);
 	});
-var $elm$core$Basics$not = _Basics_not;
+var $elm$core$Basics$neq = _Utils_notEqual;
 var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
 var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
 var $elm$core$String$filter = _String_filter;
 var $author$project$Main$test = F2(
-	function (s, f) {
-		return !$elm$core$String$isEmpty(
-			A2($elm$core$String$filter, f, s));
+	function (s, predicate) {
+		return $elm$core$String$isEmpty(
+			A2($elm$core$String$filter, predicate, s));
 	});
-var $author$project$Main$validateStrongness = function (pw) {
-	return A2($author$project$Main$test, pw, $elm$core$Char$isLower) && (A2($author$project$Main$test, pw, $elm$core$Char$isUpper) && A2($author$project$Main$test, pw, $elm$core$Char$isDigit));
+var $author$project$Main$weakPassword = function (pw) {
+	return A2($author$project$Main$test, pw, $elm$core$Char$isLower) || (A2($author$project$Main$test, pw, $elm$core$Char$isUpper) || A2($author$project$Main$test, pw, $elm$core$Char$isDigit));
 };
 var $author$project$Main$viewValidation = function (model) {
-	return (!$author$project$Main$validateStrongness(model.password)) ? A2(
+	return ($elm$core$String$length(model.password) < 8) ? A2(
 		$elm$html$Html$div,
 		_List_fromArray(
 			[
@@ -5297,7 +5297,25 @@ var $author$project$Main$viewValidation = function (model) {
 			]),
 		_List_fromArray(
 			[
-				$elm$html$Html$text('Password is too weak! Must contain  upper case, lower case, and numeric characters.')
+				$elm$html$Html$text('Password is too short! Must be above 8 characters.')
+			])) : ($author$project$Main$weakPassword(model.password) ? A2(
+		$elm$html$Html$div,
+		_List_fromArray(
+			[
+				A2($elm$html$Html$Attributes$style, 'color', 'red')
+			]),
+		_List_fromArray(
+			[
+				$elm$html$Html$text('Password is too weak! Must contain upper case, lower case, and numeric characters.')
+			])) : ((!_Utils_eq(model.password, model.passwordAgain)) ? A2(
+		$elm$html$Html$div,
+		_List_fromArray(
+			[
+				A2($elm$html$Html$Attributes$style, 'color', 'red')
+			]),
+		_List_fromArray(
+			[
+				$elm$html$Html$text('Passwords do not match!')
 			])) : A2(
 		$elm$html$Html$div,
 		_List_fromArray(
@@ -5307,7 +5325,7 @@ var $author$project$Main$viewValidation = function (model) {
 		_List_fromArray(
 			[
 				$elm$html$Html$text('OK')
-			]));
+			]))));
 };
 var $author$project$Main$view = function (model) {
 	return A2(

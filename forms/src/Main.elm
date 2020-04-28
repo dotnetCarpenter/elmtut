@@ -11,7 +11,6 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onInput)
 
-import Debug
 
 -- MAIN
 
@@ -28,13 +27,12 @@ type alias Model =
   { name : String
   , password : String
   , passwordAgain : String
-  , valid : Bool
   }
 
 
 init : Model
 init =
-  Model "" "" "" True
+  Model "" "" ""
 
 
 
@@ -81,63 +79,24 @@ viewInput t p v toMsg =
 
 viewValidation : Model -> Html msg
 viewValidation model =
-  {- if String.length model.password < 8 then
+  if String.length model.password < 8 then
     div [ style "color" "red" ] [ text "Password is too short! Must be above 8 characters." ]
-  else -} if validateStrongness model.password |> not then
-    div [ style "color" "red" ] [ text "Password is too weak! Must contain  upper case, lower case, and numeric characters." ]
-  -- else if model.password /= model.passwordAgain then
-  --   div [ style "color" "red" ] [ text "Passwords do not match!" ]
+  else if weakPassword model.password then
+    div [ style "color" "red" ] [ text "Password is too weak! Must contain upper case, lower case, and numeric characters." ]
+  else if model.password /= model.passwordAgain then
+    div [ style "color" "red" ] [ text "Passwords do not match!" ]
   else
     div [ style "color" "green" ] [ text "OK" ]
 
-debug : String -> (Char -> Bool) -> String
-debug s f =
-  String.filter f s
-  -- { model | valid = (validateStrongness model.password) }
 
--- True if pw is strong
-validateStrongness : String -> Bool
-validateStrongness pw =
+-- False if pw is weak, True if it's strong
+weakPassword : String -> Bool
+weakPassword pw =
   test pw Char.isLower
-  && test pw Char.isUpper
-  && test pw Char.isDigit
+  || test pw Char.isUpper
+  || test pw Char.isDigit
 
-  -- if String.isEmpty (debug pw Char.isLower) then
-  --   Debug.log (debug pw Char.isLower)
-  --   False
-  -- else
-  --   Debug.log (debug pw Char.isLower)
-  --   True
-
-  -- test pw Char.isLower
-  -- Debug.log (String.fromBool (test pw Char.isLower))
-  -- False
-  -- if test pw Char.isLower then
-  --   if test pw Char.isUpper then
-  --     if test pw Char.isDigit then True
-  --     else False
-  --   else False
-  -- else False
-
-  -- (String.filter (\c -> Char.isLower c) pw |> String.isEmpty)
-  -- && (String.filter (\c -> Char.isUpper c) pw |> String.isEmpty)
-  -- &&  (String.filter (\c -> Char.isDigit c) pw |> String.isEmpty)
-
-  -- Debug.log (String.foldl hasLower "" pw)
-  -- Debug.log (String.foldl hasUpper "" pw)
-
-  -- String.length (String.foldl hasLower "" pw) > 0
-  -- && String.length (String.foldl hasUpper "" pw) > 0
-
+-- True if predicate yields an empty string
 test : String -> (Char -> Bool) -> Bool
-test s f =
-  String.filter f s |> String.isEmpty |> not
-
--- hasLower : Char -> String -> String
--- hasLower char accu =
---   if Char.isLower char then String.fromChar char else accu
-
--- hasUpper : Char -> String -> String
--- hasUpper char accu =
---   if Char.isUpper char then String.fromChar char else accu
-
+test s predicate =
+  String.filter predicate s |> String.isEmpty
