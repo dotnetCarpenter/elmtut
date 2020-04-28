@@ -93,7 +93,8 @@ viewValidation model =
 weakPassword : String -> Bool
 weakPassword pw =
   test pw Char.isLower
-  || test pw Char.isUpper
+  -- || test pw Char.isUpper
+  || String.filter \c -> Char.isUpper c pw |> String.isEmpty
   || test pw Char.isDigit
 
 -- True if predicate yields an empty string
