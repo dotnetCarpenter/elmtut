@@ -1,5 +1,11 @@
 # Initial thoughts for improvement
 
+TOC
+1. [Day 1](#Day-1)
+1. [Day 2](#Day-2)
+1. [dead code elimination](#dead-code-elimination)
+1. [backend](#backend)
+
 ## Day 1
 1. asset size - `elm make --optimize` optimize variable names but **does not:**
     1. eliminate dead code (in the simple examples dead code is 56.9%)
@@ -42,6 +48,11 @@ previous examples or *forms/src/Main.elm* won't compile. The same for [text-fiel
 joy, but it does not work for *forms/src/Main.elm* hmm :sad: - restart vscode!
 12. I really miss a debugger - why oh why won't [9d3bc3e](https://github.com/dotnetCarpenter/elmtut/blob/9d3bc3e751a97675c046b9442de05d2e2839006b/forms/src/Main.elm) work!?? How do I `Debug.log` a Bool value?
 13. I really can not get lambda function to work with `.filter` and `.map`. And the compiler is not giving me any clues, so I have created an issue: https://github.com/elm/error-message-catalog/issues/336
+
+
+## Day 2
+
+
 
 ## dead code elimination
 
