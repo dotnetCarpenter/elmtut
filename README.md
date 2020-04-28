@@ -52,6 +52,18 @@ joy, but it does not work for *forms/src/Main.elm* hmm :sad: - restart vscode!
 
 ## Day 2
 
+1. How does reactivity work? Created *why/src* to understand.
+2. What is lower case types? E.i. `(String -> msg) -> Html msg`. Hint:
+This `text` call produces: `Html msg`.
+```
+type alias Html msg = VirtualDom.Node msg
+The core building block used to build up HTML. Here we create an Html value with no attributes and one child:
+
+hello : Html msg
+hello =
+  div [] [ text "Hello!" ]
+```
+
 
 
 ## dead code elimination
