@@ -11,7 +11,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onInput)
 
-import Debug
+-- import Debug
 
 -- MAIN
 
@@ -80,6 +80,9 @@ viewInput t p v toMsg =
 
 viewValidation : Model -> Html msg
 viewValidation model =
+  if (model.password |> String.isEmpty) && (model.password |> String.isEmpty) then
+    text ""
+  else
   if String.length model.password < 8 then
     div [ style "color" "red" ] [ text "Password is too short! Must be above 8 characters." ]
   else if weakPassword model.password then
@@ -106,11 +109,11 @@ weakPassword2 pw =
   || no pw (\c -> Char.isDigit c)
 
 -- False if pw is weak, True if it's strong
-weakPassword3 : String -> Bool
-weakPassword3 pw =
-  (no pw Char.isLower |> Debug.log "no pw Char.isLower")
-  || (no pw Char.isUpper |> Debug.log "no pw Char.isUpper")
-  || no pw Char.isDigit |> Debug.log "no pw Char.isDigit"
+-- weakPassword3 : String -> Bool
+-- weakPassword3 pw =
+--   (no pw Char.isLower |> Debug.log "no pw Char.isLower")
+--   || (no pw Char.isUpper |> Debug.log "no pw Char.isUpper")
+--   || no pw Char.isDigit |> Debug.log "no pw Char.isDigit"
 
 -- True if predicate yields an empty string
 no : String -> (Char -> Bool) -> Bool

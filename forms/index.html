@@ -5289,7 +5289,7 @@ var $author$project$Main$weakPassword = function (pw) {
 	return A2($author$project$Main$no, pw, $elm$core$Char$isLower) || (A2($author$project$Main$no, pw, $elm$core$Char$isUpper) || A2($author$project$Main$no, pw, $elm$core$Char$isDigit));
 };
 var $author$project$Main$viewValidation = function (model) {
-	return ($elm$core$String$length(model.password) < 8) ? A2(
+	return ($elm$core$String$isEmpty(model.password) && $elm$core$String$isEmpty(model.password)) ? $elm$html$Html$text('') : (($elm$core$String$length(model.password) < 8) ? A2(
 		$elm$html$Html$div,
 		_List_fromArray(
 			[
@@ -5325,7 +5325,7 @@ var $author$project$Main$viewValidation = function (model) {
 		_List_fromArray(
 			[
 				$elm$html$Html$text('OK')
-			]))));
+			])))));
 };
 var $author$project$Main$view = function (model) {
 	return A2(
