@@ -69,11 +69,13 @@ https://guide.elm-lang.org/types/reading_types.html#type-annotations does not sc
 `<h2 id="type-annotations">Type Annotations</h2>`. I think it is because Elm apps are dynamic
 rendered and the browser can not scroll to an element that does not exist yet. A `scrollTo` function might be considered...
 5. *“You said argument powerLevel was an Int, but it is getting used as a String!”* is not the best example when the
-code example is
+code example is:
 ```elm
 checkPower : Int -> String
 checkPower powerLevel =
   if powerLevel > 9000 then "It's over 9000!!!" else "Meh"
+
+-- checkPower True -- error!
 ```
 6. *What is lower case types?* is explained in the Type Variables section - nice!
 
