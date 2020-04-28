@@ -5260,13 +5260,13 @@ var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
 var $elm$core$String$filter = _String_filter;
-var $author$project$Main$test = F2(
+var $author$project$Main$no = F2(
 	function (s, predicate) {
 		return $elm$core$String$isEmpty(
 			A2($elm$core$String$filter, predicate, s));
 	});
 var $author$project$Main$weakPassword = function (pw) {
-	return A2($author$project$Main$test, pw, $elm$core$Char$isLower) || (A2($author$project$Main$test, pw, $elm$core$Char$isUpper) || A2($author$project$Main$test, pw, $elm$core$Char$isDigit));
+	return A2($author$project$Main$no, pw, $elm$core$Char$isLower) || (A2($author$project$Main$no, pw, $elm$core$Char$isUpper) || A2($author$project$Main$no, pw, $elm$core$Char$isDigit));
 };
 var $author$project$Main$viewValidation = function (model) {
 	return ($elm$core$String$length(model.w) < 8) ? A2(
