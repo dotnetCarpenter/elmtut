@@ -27,11 +27,9 @@ init = initialValue
 -- UPDATE
 
 type Msg
-  = Increment
-  | Decrement
+  = Increment Int
+  | Decrement Int
   | Reset
-  | Increment10
-  | Decrement10
 
 
 increaser : Int -> Model -> Model
@@ -43,13 +41,9 @@ decreaser n model = model - n
 update : Msg -> Model -> Model
 update msg model =
   case msg of
-    Increment  -> increaser 1 model
+    Increment n -> increaser n model
 
-    Increment10 -> increaser 10 model
-
-    Decrement -> decreaser 1 model
-
-    Decrement10 -> decreaser 10 model
+    Decrement n -> decreaser n model
 
     Reset -> initialValue
 
@@ -60,10 +54,10 @@ view model =
   div []
     [
       div [] [ text (String.fromInt model) ]
-    , button [ onClick Decrement10 ] [ text "minus 10" ]
-    , button [ onClick Decrement ] [ text "minus" ]
-    , button [ onClick Increment ] [ text "plus" ]
-    , button [ onClick Increment10 ] [ text "plus 10" ]
+    , button [ onClick (Decrement 10) ] [ text "minus 10" ]
+    , button [ onClick (Decrement 1) ] [ text "minus" ]
+    , button [ onClick (Increment 1) ] [ text "plus" ]
+    , button [ onClick (Increment 10) ] [ text "plus 10" ]
     , div []
         [
             button [ onClick Reset ] [ text "reset" ]

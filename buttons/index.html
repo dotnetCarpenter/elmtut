@@ -5193,20 +5193,26 @@ var $author$project$Main$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
 			case 'Increment':
-				return A2($author$project$Main$increaser, 1, model);
+				var n = msg.a;
+				return A2($author$project$Main$increaser, n, model);
 			case 'Increment10':
 				return A2($author$project$Main$increaser, 10, model);
 			case 'Decrement':
-				return A2($author$project$Main$decreaser, 1, model);
+				var n = msg.a;
+				return A2($author$project$Main$decreaser, n, model);
 			case 'Decrement10':
 				return A2($author$project$Main$decreaser, 10, model);
 			default:
 				return $author$project$Main$initialValue;
 		}
 	});
-var $author$project$Main$Decrement = {$: 'Decrement'};
+var $author$project$Main$Decrement = function (a) {
+	return {$: 'Decrement', a: a};
+};
 var $author$project$Main$Decrement10 = {$: 'Decrement10'};
-var $author$project$Main$Increment = {$: 'Increment'};
+var $author$project$Main$Increment = function (a) {
+	return {$: 'Increment', a: a};
+};
 var $author$project$Main$Increment10 = {$: 'Increment10'};
 var $author$project$Main$Reset = {$: 'Reset'};
 var $elm$html$Html$button = _VirtualDom_node('button');
@@ -5258,7 +5264,8 @@ var $author$project$Main$view = function (model) {
 				$elm$html$Html$button,
 				_List_fromArray(
 					[
-						$elm$html$Html$Events$onClick($author$project$Main$Decrement)
+						$elm$html$Html$Events$onClick(
+						$author$project$Main$Decrement(1))
 					]),
 				_List_fromArray(
 					[
@@ -5268,7 +5275,8 @@ var $author$project$Main$view = function (model) {
 				$elm$html$Html$button,
 				_List_fromArray(
 					[
-						$elm$html$Html$Events$onClick($author$project$Main$Increment)
+						$elm$html$Html$Events$onClick(
+						$author$project$Main$Increment(1))
 					]),
 				_List_fromArray(
 					[
