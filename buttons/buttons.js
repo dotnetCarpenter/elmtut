@@ -4355,7 +4355,7 @@ function _Browser_load(url)
 		}
 	}));
 }
-var $author$project$Main$initialValue = 100;
+var $author$project$Main$initialValue = 0;
 var $author$project$Main$init = $author$project$Main$initialValue;
 var $elm$core$Basics$EQ = 1;
 var $elm$core$Basics$GT = 2;
@@ -5161,36 +5161,28 @@ var $elm$browser$Browser$sandbox = function (impl) {
 			aC: impl.aC
 		});
 };
-var $author$project$Main$decreaser = F2(
-	function (n, model) {
-		return model - n;
-	});
-var $author$project$Main$increaser = F2(
+var $author$project$Main$change = F2(
 	function (n, model) {
 		return model + n;
 	});
 var $author$project$Main$update = F2(
 	function (msg, model) {
-		switch (msg) {
-			case 0:
-				return A2($author$project$Main$increaser, 1, model);
-			case 3:
-				return A2($author$project$Main$increaser, 10, model);
-			case 1:
-				return A2($author$project$Main$decreaser, 1, model);
-			case 4:
-				return A2($author$project$Main$decreaser, 10, model);
-			default:
-				return $author$project$Main$initialValue;
+		if (!msg.$) {
+			var n = msg.a;
+			return A2($author$project$Main$change, n, model);
+		} else {
+			return $author$project$Main$initialValue;
 		}
 	});
-var $author$project$Main$Decrement = 1;
-var $author$project$Main$Decrement10 = 4;
-var $author$project$Main$Increment = 0;
-var $author$project$Main$Increment10 = 3;
-var $author$project$Main$Reset = 2;
+var $author$project$Main$Change = function (a) {
+	return {$: 0, a: a};
+};
+var $author$project$Main$Reset = {$: 1};
 var $elm$html$Html$button = _VirtualDom_node('button');
 var $elm$html$Html$div = _VirtualDom_node('div');
+var $elm$core$Basics$negate = function (n) {
+	return -n;
+};
 var $elm$virtual_dom$VirtualDom$Normal = function (a) {
 	return {$: 0, a: a};
 };
@@ -5228,7 +5220,8 @@ var $author$project$Main$view = function (model) {
 				$elm$html$Html$button,
 				_List_fromArray(
 					[
-						$elm$html$Html$Events$onClick(4)
+						$elm$html$Html$Events$onClick(
+						$author$project$Main$Change(-10))
 					]),
 				_List_fromArray(
 					[
@@ -5238,7 +5231,8 @@ var $author$project$Main$view = function (model) {
 				$elm$html$Html$button,
 				_List_fromArray(
 					[
-						$elm$html$Html$Events$onClick(1)
+						$elm$html$Html$Events$onClick(
+						$author$project$Main$Change(-1))
 					]),
 				_List_fromArray(
 					[
@@ -5248,7 +5242,8 @@ var $author$project$Main$view = function (model) {
 				$elm$html$Html$button,
 				_List_fromArray(
 					[
-						$elm$html$Html$Events$onClick(0)
+						$elm$html$Html$Events$onClick(
+						$author$project$Main$Change(1))
 					]),
 				_List_fromArray(
 					[
@@ -5258,7 +5253,8 @@ var $author$project$Main$view = function (model) {
 				$elm$html$Html$button,
 				_List_fromArray(
 					[
-						$elm$html$Html$Events$onClick(3)
+						$elm$html$Html$Events$onClick(
+						$author$project$Main$Change(10))
 					]),
 				_List_fromArray(
 					[
@@ -5273,7 +5269,7 @@ var $author$project$Main$view = function (model) {
 						$elm$html$Html$button,
 						_List_fromArray(
 							[
-								$elm$html$Html$Events$onClick(2)
+								$elm$html$Html$Events$onClick($author$project$Main$Reset)
 							]),
 						_List_fromArray(
 							[

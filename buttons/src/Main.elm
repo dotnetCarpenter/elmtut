@@ -1,4 +1,4 @@
-module Main exposing (..)
+module Main exposing (main)
 
 -- Press buttons to increment and decrement a counter.
 --
@@ -17,7 +17,7 @@ main =
 
 -- MODEL
 initialValue: Int
-initialValue = 100
+initialValue = 0
 
 type alias Model = Int
 
@@ -27,23 +27,17 @@ init = initialValue
 -- UPDATE
 
 type Msg
-  = Increment Int
-  | Decrement Int
+  = Change Int
   | Reset
 
 
-increaser : Int -> Model -> Model
-increaser n model = model + n
-
-decreaser : Int -> Model -> Model
-decreaser n model = model - n
+change : Int -> Model -> Model
+change n model = model + n
 
 update : Msg -> Model -> Model
 update msg model =
   case msg of
-    Increment n -> increaser n model
-
-    Decrement n -> decreaser n model
+    Change n -> change n model
 
     Reset -> initialValue
 
@@ -54,10 +48,10 @@ view model =
   div []
     [
       div [] [ text (String.fromInt model) ]
-    , button [ onClick (Decrement 10) ] [ text "minus 10" ]
-    , button [ onClick (Decrement 1) ] [ text "minus" ]
-    , button [ onClick (Increment 1) ] [ text "plus" ]
-    , button [ onClick (Increment 10) ] [ text "plus 10" ]
+    , button [ onClick (Change -10) ] [ text "minus 10" ]
+    , button [ onClick (Change -1) ] [ text "minus" ]
+    , button [ onClick (Change 1) ] [ text "plus" ]
+    , button [ onClick (Change 10) ] [ text "plus 10" ]
     , div []
         [
             button [ onClick Reset ] [ text "reset" ]
