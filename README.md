@@ -1,4 +1,5 @@
 # Initial thoughts for improvement
+_and Elm notes in general_
 
 TOC
 1. [Day 1](#Day-1)
@@ -105,7 +106,9 @@ function _Debug_todoCase(moduleName, region, value)
 function _Debug_toString_UNUSED(value)
 function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 ```
-
+https://github.com/dotnetCarpenter/elmtut/issues/1 does a pretty good job at
+explaining what is going on and how to get rid of dead code (`terser`).
+Also [this article](https://medium.com/better-programming/reducing-js-bundle-size-a6533c183296) sheds some light on the DCE process using `terser`.
 
 ## backend
 

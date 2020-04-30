@@ -1,4 +1,4 @@
-module Main exposing (..)
+module Main exposing (main)
 
 -- Input a user name and password. Make sure the password matches.
 --
