@@ -53,7 +53,7 @@ joy, but it does not work for *forms/src/Main.elm* hmm :sad: - restart vscode!
 
 ## Day 2
 
-1. How does reactivity work? Created *why/src* to understand.
+1. How does reactivity work? Created *why/src/Main.elm* to understand.
 2. What is lower case types? E.i. `(String -> msg) -> Html msg`. Hint:
 This `text` call produces: `Html msg`.
 ```
