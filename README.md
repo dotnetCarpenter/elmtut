@@ -81,6 +81,11 @@ checkPower powerLevel =
 6. *What is lower case types?* is explained in the Type Variables section - nice!
 
 
+## Day 3
+
+1. Exercise 1 in https://guide.elm-lang.org/error_handling/maybe.html is missing `module Main exposing (..)`
+and won't compile. Similar to 9. on Day 1. Is this new in 0.19?
+
 ----------------------------------------------------------
 
 ## dead code elimination
