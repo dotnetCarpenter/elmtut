@@ -80,6 +80,7 @@ viewInput t p v toMsg =
 
 viewValidation : Model -> Html msg
 viewValidation model =
+  -- why do I need to guard against and empty model - I'm sure I initially didn't have to
   if (model.password |> String.isEmpty) && (model.password |> String.isEmpty) then
     text ""
   else
