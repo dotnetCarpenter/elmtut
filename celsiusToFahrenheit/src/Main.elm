@@ -56,6 +56,10 @@ view model =
     Nothing ->
       viewConverter model.input (style "color" "red") "???"
 
+viewAttrConverter : String -> Bool -> Attribute Msg
+viewAttrConverter color box =
+  style "color" color (if box then (style "border-color" color) else style "")
+
 
 viewConverter : String -> Attribute Msg -> String -> Html Msg
 viewConverter userInput st equivalentTemp =
