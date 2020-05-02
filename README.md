@@ -4,6 +4,8 @@ _and Elm notes in general_
 TOC
 1. [Day 1](#Day-1)
 1. [Day 2](#Day-2)
+1. [Day 3](#Day-3)
+1. [Day 4](#Day-4)
 1. [dead code elimination](#dead-code-elimination)
 1. [backend](#backend)
 
@@ -93,7 +95,9 @@ and won't compile. Similar to 9. on Day 1. Is this new in 0.19?
 `Local Float parameter` (`String.toFloat model.input`). Is `elm-format` missing type information,
 is there some locked potential here? Could intelliSense give me better options for that variable?
 But at least the compiler knows and will throw if I use `celsius` wrong.
-2.
+2. Wow, the search result text is really difficult to read: ![Text snippet contrast to background is poor](./image/search_contrast.png)
+3. Why is `Attribute` always imported and `elm-format` always saying it
+is unused? Should I use it more?
 
 ----------------------------------------------------------
 
