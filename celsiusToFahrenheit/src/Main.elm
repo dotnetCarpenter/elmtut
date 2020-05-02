@@ -20,6 +20,7 @@ main =
 
 type alias Model =
   { input : String
+  -- , error : Bool
   }
 
 
@@ -51,27 +52,22 @@ view : Model -> Html Msg
 view model =
   case String.toFloat model.input of
     Just celsius ->
-      viewConverter model.input "blue" (String.fromFloat (celsius * 1.8 + 32))
+      viewConverter model.input False "blue" (String.fromFloat (celsius * 1.8 + 32))
 
     Nothing ->
       -- span []
       --   [
       --     input [ value model.input, style "border" "1px solid red" ] []
       --   ]
-      viewConverter model.input "red" "???"
+      viewConverter model.input True "red" "???"
 
 
-viewConverter : String -> String -> String -> Html Msg
-viewConverter userInput color equivalentTemp =
+viewConverter : String -> Bool -> String -> String -> Html Msg
+viewConverter userInput isError color equivalentTemp =
   span []
-    [ input [ value userInput, onInput Change, style "width" "40px" ] []
+    [ input [ value userInput, onInput Change, style "width" "40px", style "border" (if isError then "1px solid " ++ color else "none") ] []
     , text "°C = "
-    -- , span [ st ] [ text equivalentTemp ]
-    , span [
-      style "border" ("1px solid " ++ color)
-    , style "color" color
-    ] [ text equivalentTemp ]
-    , text "°F"
+    , span [ style "color" color ] [ text equivalentTemp ], text "°F"
     ]
 
 -- viewAttrConverter attr =
