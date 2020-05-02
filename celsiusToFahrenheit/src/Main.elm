@@ -55,20 +55,63 @@ toFahrenheit n =
 
 view : Model -> Html Msg
 view model =
-  div []
+  Html.ul
+    []
     [
-      label [] [
-        input [ type_ "radio", name "convertion", id "ctof", checked True ] []
-      , text "Celcius to Fahrenheit"
-      ]
-    , span [] [ input
-      [
-          type_ "number"
-        , style "width" "40px"
-        , style "margin-left" "1em"
-      ] [] ]
-    -- , div [] [ viewConverter model.input False "blue" (toFahrenheit (Maybe.withDefault 0 String.toFloat model.input)) ]
+      Html.li
+        []
+        [
+          label
+          []
+          [
+            text "Celcius to Fahrenheit"
+          , input
+            [
+              type_ "number"
+            , style "width" "40px"
+            , style "margin-left" "1em"
+            ]
+            []
+          ]
+        , span [] [ text "Result"]
+        ]
+      , Html.li
+        []
+        [
+          label
+          []
+          [
+            text "Fahrenheit to Celcius"
+          , input
+            [
+              type_ "number"
+            , style "width" "40px"
+            , style "margin-left" "1em"
+            ]
+            []
+          ]
+        , span [] [ text "Result"]
+        ]
+      , Html.li
+        []
+        [
+          label
+          []
+          [
+            text "Inches to Meters"
+          , input
+            [
+              type_ "number"
+            , style "width" "40px"
+            , style "margin-left" "1em"
+            ]
+            []
+          ]
+        , span [] [ text "Result"]
+        ]
     ]
+
+    -- , div [] [ viewConverter model.input False "blue" (toFahrenheit (Maybe.withDefault 0 String.toFloat model.input)) ]
 -- view model =
 --   case String.toFloat model.input of
 --     Just celsius ->

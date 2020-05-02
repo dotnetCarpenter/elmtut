@@ -98,7 +98,8 @@ But at least the compiler knows and will throw if I use `celsius` wrong.
 2. Wow, the search result text is really difficult to read: ![Text snippet contrast to background is poor](./image/search_contrast.png)
 3. Why is `Attribute` always imported and `elm-format` always saying it
 is unused? Should I use it more?
-
+4. Understand now that `elm reactor`, while it compiles `Main.elm` it does **not** generate a new `index.html`. For that
+use `elm make src/Main.elm`.
 ----------------------------------------------------------
 
 ## dead code elimination
