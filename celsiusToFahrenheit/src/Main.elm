@@ -16,17 +16,25 @@ main =
 
 
 -- MODEL
-
-
+-- type
+type Attr = Attribute
 type alias Model =
-  { input : String
+  {
+    input : String
+  , style : List Attr
   -- , error : Bool
   }
 
 
 init : Model
 init =
-  { input = "" }
+  { input = ""
+  , style = [
+      type_ "number"
+    , style "width" "40px"
+    , style "margin-left" "1em"
+    ]
+  }
 
 
 
@@ -46,6 +54,18 @@ update msg model =
 toFahrenheit : Float -> String
 toFahrenheit n =
   String.fromFloat (n * 1.8 + 32)
+
+toCelsius : Float -> String
+toCelsius n =
+  String.fromFloat (n / 1.8 - 32)
+
+toMeters : Float -> String
+toMeters n =
+  String.fromFloat (n / 39.37)
+
+toInches : Float -> String
+toInches m =
+  String.fromFloat (m * 39.37)
 
 -- VIEW
 
