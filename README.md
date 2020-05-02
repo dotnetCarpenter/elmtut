@@ -86,6 +86,15 @@ checkPower powerLevel =
 1. Exercise 1 in https://guide.elm-lang.org/error_handling/maybe.html is missing `module Main exposing (..)`
 and won't compile. Similar to 9. on Day 1. Is this new in 0.19?
 
+## Day 4
+
+1. In the _maybe.html_ excersise , when hovering over `celsius` in `Just celsius`,
+`elm-format@0.8.3` tells me that `celsius` is a `Local parameter`. AFAIK it is a,
+`Local Float parameter` (`String.toFloat model.input`). Is `elm-format` missing type information,
+is there some locked potential here? Could intelliSense give me better options for that variable?
+But at least the compiler knows and will throw if I use `celsius` wrong.
+2.
+
 ----------------------------------------------------------
 
 ## dead code elimination

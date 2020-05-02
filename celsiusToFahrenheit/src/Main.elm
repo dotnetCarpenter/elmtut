@@ -51,17 +51,20 @@ view : Model -> Html Msg
 view model =
   case String.toFloat model.input of
     Just celsius ->
-      viewConverter model.input "blue" (String.fromFloat (celsius * 1.8 + 32))
+      viewConverter model.input (style "color" "blue") (String.fromFloat (celsius * 1.8 + 32))
 
     Nothing ->
-      viewConverter model.input "red" "???"
+      viewConverter model.input (style "color" "red") "???"
 
 
-viewConverter : String -> String -> String -> Html Msg
-viewConverter userInput color equivalentTemp =
+viewConverter : String -> Attribute Msg -> String -> Html Msg
+viewConverter userInput st equivalentTemp =
   span []
     [ input [ value userInput, onInput Change, style "width" "40px" ] []
     , text "°C = "
-    , span [ style "color" color ] [ text equivalentTemp ]
+    , span [ st ] [ text equivalentTemp ]
+    -- , span [ style "color" color ] [ text equivalentTemp ]
     , text "°F"
     ]
+
+-- viewAttrConverter attr =
