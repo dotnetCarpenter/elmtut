@@ -17,20 +17,27 @@ main =
 
 -- MODEL
 
-type alias Model =
-  { fahrenheit: Float
-  , celsius: Float
-  , inches: Float
-  , meters: Float
+type alias ConversionValue =
+  { input : String
+  , output : Float
   }
 
+type alias Model =
+  { fahrenheit: ConversionValue
+  , celsius: ConversionValue
+  , inches: ConversionValue
+  , meters: ConversionValue
+  }
+
+initalValue : ConversionValue
+initalValue = { input = "", output = 0.0 }
 
 init : Model
 init =
-  { fahrenheit = 0.0
-  , celsius = 0.0
-  , inches = 0.0
-  , meters = 0.0
+  { fahrenheit = initalValue
+  , celsius = initalValue
+  , inches = initalValue
+  , meters = initalValue
   }
 
 
@@ -67,41 +74,35 @@ debug o = o |> Debug.log (Debug.toString o)
 
 
 
--- updateInput : ConversionValue -> String -> ConversionValue
--- updateInput slice input =
---   { slice | input = input }
+updateInput : ConversionValue -> String -> ConversionValue
+updateInput slice input =
+  { slice | input = input }
 
--- updateOutput : ConversionValue -> Float -> ConversionValue
--- updateOutput slice output =
---   { slice | output = output }
+updateOutput : ConversionValue -> Float -> ConversionValue
+updateOutput slice output =
+  { slice | output = output }
 
 
--- updateConversion : Model -> ConversionValue -> Model
--- updateConversion model value =
---   case String.toFloat value.input of
---     Just float ->
---       { model | fahrenheit = updateOutput model.fahrenheit (toFahrenheit float) }
+updateConversion : Model -> ConversionValue -> Model
+updateConversion model value =
+  case String.toFloat value.input of
+    Just float ->
+      { model | fahrenheit = updateOutput model.fahrenheit (toFahrenheit float) }
 
---     Nothing ->
---       model
+    Nothing ->
+      model
 
 update : Msg -> Model -> Model
 update msg model =
   case msg of
-    Celsius v ->
-      { model | celsius =  (Maybe.withDefault 0.0 (String.toFloat v)), fahrenheit = toFahrenheit (Maybe.withDefault 0.0 (String.toFloat v))}
+    Celsius newInput ->
+      updateConversion
+        { model | celsius = updateInput model.celsius newInput, fahrenheit = updateOutput model.fahrenheit (Maybe.withDefault 0 (String.toFloat newInput))  }
+        model.celsius
+      -- updateConversion msg { model.celsius | input = newInput }
+      -- debug model newInput
 
     Fahrenheit _ -> Debug.todo "Not implemented"
-
-    -- Celsius newInput ->
-    --   updateConversion
-    --     { model | celsius = updateInput model.celsius newInput, fahrenheit = updateOutput model.fahrenheit (Maybe.withDefault 0 (String.toFloat newInput))  }
-    --     model.celsius
-    --   -- updateConversion msg { model.celsius | input = newInput }
-    --   -- debug model newInput
-
-    -- Fahrenheit _ -> Debug.todo "Not implemented"
-
   -- case msg of
   --   Celsius newInput ->
   --     case String.toFloat newInput of
@@ -132,12 +133,12 @@ view model =
   , div [] (viewConverter model.fahrenheit Fahrenheit "°F")
   ]
 
-viewConverter : Float -> (String -> msg) -> String -> List (Html msg)
-viewConverter value msg symbol =
-  [ viewInput "text" (String.fromFloat value) msg
+viewConverter : ConversionValue -> (String -> msg) -> String -> List (Html msg)
+viewConverter model msg s =
+  [ viewInput "text" model.input msg
     , span []
-    [ text (symbol ++ " = ")
-      , text (String.fromFloat value)
+    [ text (s ++ " = ")
+      , text (String.fromFloat model.output)
     ]
   ]
 
