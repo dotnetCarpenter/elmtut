@@ -100,6 +100,9 @@ But at least the compiler knows and will throw if I use `celsius` wrong.
 is unused? Should I use it more?
 4. Understand now that `elm reactor`, while it compiles `Main.elm` it does **not** generate a new `index.html`. For that
 use `elm make src/Main.elm`.
+5. Custon code folding support in `elm-format` would be nice. Ala https://marketplace.visualstudio.com/items?itemName=maptz.regionfolder
+
+
 ----------------------------------------------------------
 
 ## dead code elimination

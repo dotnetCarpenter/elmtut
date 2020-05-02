@@ -16,25 +16,17 @@ main =
 
 
 -- MODEL
--- type
-type Attr = Attribute
+
+
 type alias Model =
   {
     input : String
-  , style : List Attr
-  -- , error : Bool
   }
 
 
 init : Model
 init =
-  { input = ""
-  , style = [
-      type_ "number"
-    , style "width" "40px"
-    , style "margin-left" "1em"
-    ]
-  }
+  { input = "" }
 
 
 
@@ -75,62 +67,58 @@ toInches m =
 
 view : Model -> Html Msg
 view model =
-  Html.ul
-    []
-    [
-      Html.li
-        []
-        [
-          label
+  Html.div [] [
+    text model.input
+  , Html.ul
+      []
+      [
+        Html.li
           []
           [
-            text "Celcius to Fahrenheit"
-          , input
-            [
-              type_ "number"
-            , style "width" "40px"
-            , style "margin-left" "1em"
-            ]
+            label
             []
+            [
+              text "Celcius to Fahrenheit"
+            , styleInput
+            ]
+          , span [] [ text "Result"]
           ]
-        , span [] [ text "Result"]
-        ]
-      , Html.li
-        []
-        [
-          label
+        , Html.li
           []
           [
-            text "Fahrenheit to Celcius"
-          , input
-            [
-              type_ "number"
-            , style "width" "40px"
-            , style "margin-left" "1em"
-            ]
+            label
             []
+            [
+              text "Fahrenheit to Celcius"
+            , styleInput
+            ]
+          , span [] [ text "Result"]
           ]
-        , span [] [ text "Result"]
-        ]
-      , Html.li
-        []
-        [
-          label
+        , Html.li
           []
           [
-            text "Inches to Meters"
-          , input
-            [
-              type_ "number"
-            , style "width" "40px"
-            , style "margin-left" "1em"
-            ]
+            label
             []
+            [
+              text "Inches to Meters"
+            , styleInput
+            ]
+          , span [] [ text "Result"]
           ]
-        , span [] [ text "Result"]
-        ]
-    ]
+      ]
+  ]
 
+
+styleInput : Html Msg
+styleInput =
+  input [
+          type_ "number"
+        , style "width" "40px"
+        , style "margin-left" "1em"
+        , onInput Change
+        ] []
+
+-- #region old
     -- , div [] [ viewConverter model.input False "blue" (toFahrenheit (Maybe.withDefault 0 String.toFloat model.input)) ]
 -- view model =
 --   case String.toFloat model.input of
@@ -168,5 +156,7 @@ view model =
 --     , text "°C = "
 --     , span [ style "color" color ] [ text equivalentTemp ], text "°F"
 --     ]
+-- #endregion
+
 
 -- viewAttrConverter attr =
