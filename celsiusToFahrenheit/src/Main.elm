@@ -54,6 +54,10 @@ view model =
       viewConverter model.input "blue" (String.fromFloat (celsius * 1.8 + 32))
 
     Nothing ->
+      -- span []
+      --   [
+      --     input [ value model.input, style "border" "1px solid red" ] []
+      --   ]
       viewConverter model.input "red" "???"
 
 
@@ -64,8 +68,8 @@ viewConverter userInput color equivalentTemp =
     , text "°C = "
     -- , span [ st ] [ text equivalentTemp ]
     , span [
-      style "border" ("1px solid" ++ color)
-    -- , style "color" color
+      style "border" ("1px solid " ++ color)
+    , style "color" color
     ] [ text equivalentTemp ]
     , text "°F"
     ]
