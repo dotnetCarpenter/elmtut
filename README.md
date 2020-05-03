@@ -111,6 +111,9 @@ use `elm make src/Main.elm`.
 1. `elm-format` should suggest functions inside record updates. ![elm-format has no suggestions inside a record update](./image/no_suggestions_function.png)
 2. So updating records is not very nice. I seem to not be the only one thinking that: https://medium.com/elm-shorts/updating-nested-records-in-elm-15d162e80480
 3. After reading through chapter _Error Handling_, I really wish there was an example on how to make higher order functions.
+4. Found an article on [tricks with case statements](https://medium.com/elm-shorts/tricks-with-case-statements-in-elm-80223b85484f) which might be useful once I get a little deeper into Elm.
+5. So `Result` is only for [pattern matching](https://stackoverflow.com/questions/40953537/how-do-i-check-if-a-result-is-ok-or-err-in-elm) it seems. I thought I could get the `Ok` value out [somehow](https://github.com/dotnetCarpenter/elmtut/commit/9cc2b0bc46244a7af650f21d97d78f96c22a32be).
+
 
 
 ----------------------------------------------------------
