@@ -5,7 +5,7 @@ import Html exposing (Html, div, span, input, text)
 import Html.Attributes exposing (value, style, placeholder, type_)
 import Html.Events exposing (onInput)
 import Round
-import Json.Encode as Encode
+-- import Json.Encode as Encode
 
 import Debug
 
@@ -155,7 +155,8 @@ viewInput t v e p toMsg =
   , value v
   , placeholder p
   , onInput toMsg
-  , Html.Attributes.property "setCustomValidity" (Encode.string e)
+  -- , Html.Attributes.property "setCustomValidity" (Encode.string e)
+  , if String.length e > 0 then style "border-color" "red" |> Debug.log e else style "border-color" "auto" |> Debug.log e
   , style "width" "6em"
   , style "margin" "1em 1em 0" ] []
 
