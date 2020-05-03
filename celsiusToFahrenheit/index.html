@@ -5218,6 +5218,10 @@ var $elm$browser$Browser$sandbox = function (impl) {
 			view: impl.view
 		});
 };
+var $author$project$Main$ConversionValue = F2(
+	function (input, output) {
+		return {input: input, output: output};
+	});
 var $elm$core$String$toFloat = _String_toFloat;
 var $elm$core$Maybe$withDefault = F2(
 	function (_default, maybe) {
@@ -5240,44 +5244,59 @@ var $author$project$Main$toCelsius = function (n) {
 var $author$project$Main$toFahrenheit = function (n) {
 	return (n * 1.8) + 32;
 };
-var $author$project$Main$updateInput = F2(
-	function (slice, value) {
-		return _Utils_update(
-			slice,
-			{input: value});
-	});
-var $author$project$Main$updateOutput = F2(
-	function (slice, value) {
-		return _Utils_update(
-			slice,
-			{output: value});
-	});
+var $author$project$Main$toInches = function (m) {
+	return m * 39.37;
+};
+var $author$project$Main$toMeters = function (n) {
+	return n / 39.37;
+};
 var $author$project$Main$update = F2(
 	function (msg, model) {
-		if (msg.$ === 'Celsius') {
-			var v = msg.a;
-			return _Utils_update(
-				model,
-				{
-					celsius: A2($author$project$Main$updateInput, model.celsius, v),
-					fahrenheit: A2(
-						$author$project$Main$updateOutput,
-						model.fahrenheit,
-						$author$project$Main$toFahrenheit(
-							$author$project$Main$convertToFloat(v)))
-				});
-		} else {
-			var v = msg.a;
-			return _Utils_update(
-				model,
-				{
-					celsius: A2(
-						$author$project$Main$updateOutput,
-						model.celsius,
-						$author$project$Main$toCelsius(
-							$author$project$Main$convertToFloat(v))),
-					fahrenheit: A2($author$project$Main$updateInput, model.fahrenheit, v)
-				});
+		switch (msg.$) {
+			case 'Celsius':
+				var v = msg.a;
+				return _Utils_update(
+					model,
+					{
+						celsius: A2(
+							$author$project$Main$ConversionValue,
+							v,
+							$author$project$Main$toFahrenheit(
+								$author$project$Main$convertToFloat(v)))
+					});
+			case 'Fahrenheit':
+				var v = msg.a;
+				return _Utils_update(
+					model,
+					{
+						fahrenheit: A2(
+							$author$project$Main$ConversionValue,
+							v,
+							$author$project$Main$toCelsius(
+								$author$project$Main$convertToFloat(v)))
+					});
+			case 'Meters':
+				var v = msg.a;
+				return _Utils_update(
+					model,
+					{
+						meters: A2(
+							$author$project$Main$ConversionValue,
+							v,
+							$author$project$Main$toInches(
+								$author$project$Main$convertToFloat(v)))
+					});
+			default:
+				var v = msg.a;
+				return _Utils_update(
+					model,
+					{
+						inches: A2(
+							$author$project$Main$ConversionValue,
+							v,
+							$author$project$Main$toMeters(
+								$author$project$Main$convertToFloat(v)))
+					});
 		}
 	});
 var $author$project$Main$Celsius = function (a) {
@@ -5286,7 +5305,14 @@ var $author$project$Main$Celsius = function (a) {
 var $author$project$Main$Fahrenheit = function (a) {
 	return {$: 'Fahrenheit', a: a};
 };
+var $author$project$Main$Inches = function (a) {
+	return {$: 'Inches', a: a};
+};
+var $author$project$Main$Meters = function (a) {
+	return {$: 'Meters', a: a};
+};
 var $elm$html$Html$div = _VirtualDom_node('div');
+var $elm$html$Html$form = _VirtualDom_node('form');
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
 var $elm$core$Debug$toString = _Debug_toString;
@@ -5601,8 +5627,6 @@ var $elm$html$Html$Events$onInput = function (tagger) {
 			$elm$html$Html$Events$alwaysStop,
 			A2($elm$json$Json$Decode$map, tagger, $elm$html$Html$Events$targetValue)));
 };
-var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
-var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $elm$html$Html$Attributes$stringProperty = F2(
 	function (key, string) {
@@ -5611,34 +5635,45 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 			key,
 			$elm$json$Json$Encode$string(string));
 	});
+var $elm$html$Html$Attributes$placeholder = $elm$html$Html$Attributes$stringProperty('placeholder');
+var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
+var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
 var $elm$html$Html$Attributes$type_ = $elm$html$Html$Attributes$stringProperty('type');
 var $elm$html$Html$Attributes$value = $elm$html$Html$Attributes$stringProperty('value');
-var $author$project$Main$viewInput = F3(
-	function (t, v, toMsg) {
+var $author$project$Main$viewInput = F4(
+	function (t, v, p, toMsg) {
 		return A2(
 			$elm$html$Html$input,
 			_List_fromArray(
 				[
 					$elm$html$Html$Attributes$type_(t),
 					$elm$html$Html$Attributes$value(v),
+					$elm$html$Html$Attributes$placeholder(p),
 					$elm$html$Html$Events$onInput(toMsg),
 					A2($elm$html$Html$Attributes$style, 'width', '6em')
 				]),
 			_List_Nil);
 	});
-var $author$project$Main$viewConverter = F3(
-	function (value, msg, symbol) {
+var $author$project$Main$viewConverter = F4(
+	function (value, msg, p, convertSymbol) {
 		return _List_fromArray(
 			[
-				A3($author$project$Main$viewInput, 'text', value.input, msg),
+				A4($author$project$Main$viewInput, 'text', value.input, p, msg),
 				A2(
 				$elm$html$Html$span,
 				_List_Nil,
 				_List_fromArray(
 					[
-						$elm$html$Html$text(symbol + ' = '),
-						$elm$html$Html$text(
-						A2($myrho$elm_round$Round$round, 2, value.output))
+						$elm$html$Html$text(' = '),
+						A2(
+						$elm$html$Html$span,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$text(
+								A2($myrho$elm_round$Round$round, 2, value.output))
+							])),
+						$elm$html$Html$text(convertSymbol)
 					]))
 			]);
 	});
@@ -5649,15 +5684,23 @@ var $author$project$Main$view = function (model) {
 		_List_fromArray(
 			[
 				A2(
-				$elm$html$Html$div,
+				$elm$html$Html$form,
 				_List_Nil,
-				A3($author$project$Main$viewConverter, model.celsius, $author$project$Main$Celsius, '°C')),
+				A4($author$project$Main$viewConverter, model.celsius, $author$project$Main$Celsius, 'Celsius', '°F')),
 				A2(
-				$elm$html$Html$div,
+				$elm$html$Html$form,
 				_List_Nil,
-				A3($author$project$Main$viewConverter, model.fahrenheit, $author$project$Main$Fahrenheit, '°F')),
+				A4($author$project$Main$viewConverter, model.fahrenheit, $author$project$Main$Fahrenheit, 'Fahrenheit', '°C')),
 				A2(
-				$elm$html$Html$div,
+				$elm$html$Html$form,
+				_List_Nil,
+				A4($author$project$Main$viewConverter, model.meters, $author$project$Main$Meters, 'Meters', '“')),
+				A2(
+				$elm$html$Html$form,
+				_List_Nil,
+				A4($author$project$Main$viewConverter, model.inches, $author$project$Main$Inches, 'Inches', 'm')),
+				A2(
+				$elm$html$Html$form,
 				_List_Nil,
 				_List_fromArray(
 					[

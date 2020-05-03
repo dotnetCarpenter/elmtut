@@ -2,7 +2,7 @@ module Main exposing (main)
 
 import Browser
 import Html exposing (Html, div, span, input, text)
-import Html.Attributes exposing (value, style, type_)
+import Html.Attributes exposing (value, style, placeholder, type_)
 import Html.Events exposing (onInput)
 import Round
 
@@ -25,7 +25,9 @@ type alias ConversionValue =
 
 type alias Model =
   { celsius: ConversionValue
+  , fahrenheit: ConversionValue
   , meters: ConversionValue
+  , inches: ConversionValue
   }
 
 initialValue : ConversionValue
@@ -34,7 +36,9 @@ initialValue = { input = "", output = 0.0 }
 init : Model
 init =
   { celsius = initialValue
+  , fahrenheit = initialValue
   , meters = initialValue
+  , inches = initialValue
   }
 
 
@@ -61,34 +65,29 @@ toInches m =
 type Msg
   = Celsius String
   | Fahrenheit String
+  | Meters String
+  | Inches String
 
 
 convertToFloat : String -> Float
 convertToFloat v =
   Maybe.withDefault 0.0 (String.toFloat v)
 
-updateInput : ConversionValue -> String -> ConversionValue
-updateInput slice value =
-  { slice | input = value }
-
-updateOutput : ConversionValue -> Float -> ConversionValue
-updateOutput slice value =
-  { slice | output = value }
 
 update : Msg -> Model -> Model
 update msg model =
   case msg of
     Celsius v ->
-      { model |
-        celsius = updateInput model.celsius v
-      , celsius = updateOutput model.celsius toFahrenheit (convertToFloat v)
-      }
+      { model | celsius = ConversionValue v (toFahrenheit (convertToFloat v)) }
 
     Fahrenheit v ->
-      { model |
-        celsius = updateOutput model.celsius (toCelsius (convertToFloat v))
-      }
+      { model | fahrenheit = ConversionValue v (toCelsius (convertToFloat v)) }
 
+    Meters v ->
+      { model | meters = ConversionValue v (toInches (convertToFloat v)) }
+
+    Inches v ->
+      { model | inches = ConversionValue v (toMeters (convertToFloat v))}
 
 
 -- VIEW
@@ -97,24 +96,29 @@ update msg model =
 view : Model -> Html Msg
 view model =
   div [] [
-    div [] (viewConverter model.celsius Celsius "°C")
-  , div [] (viewConverter model.fahrenheit Fahrenheit "°F")
-  , div [] [ text (Debug.toString model) ]
+    Html.form [] (viewConverter model.celsius Celsius "Celsius" "°F")
+  , Html.form [] (viewConverter model.fahrenheit Fahrenheit "Fahrenheit" "°C")
+  , Html.form [] (viewConverter model.meters Meters "Meters" "“")
+  , Html.form [] (viewConverter model.inches Inches "Inches" "m")
+  , Html.form [] [ text (Debug.toString model) ]
   ]
 
-viewConverter : ConversionValue -> (String -> msg) -> String -> List (Html msg)
-viewConverter value msg symbol =
-  [ viewInput "text" value.input msg
+viewConverter : ConversionValue -> (String -> msg) -> String -> String -> List (Html msg)
+viewConverter value msg p convertSymbol =
+  [ viewInput "text" value.input p msg
     , span []
-    [ text (symbol ++ " = ")
-      , text (Round.round 2 value.output)
+    [ text " = "
+    , span [] [ text (Round.round 2 value.output)
+    ]
+    , text convertSymbol
     ]
   ]
 
-viewInput : String -> String -> (String -> msg) -> Html msg
-viewInput t v toMsg =
+viewInput : String -> String -> String -> (String -> msg) -> Html msg
+viewInput t v p toMsg =
   input [type_ t
   , value v
+  , placeholder p
   , onInput toMsg
   , style "width" "6em" ] []
 
