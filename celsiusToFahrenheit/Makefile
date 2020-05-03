@@ -5,7 +5,8 @@ optimizedHtml = index2.html
 templateHtml = ../template.html
 source = src/Main.elm
 
-pure_funcs = 'pure_funcs="F2,F3,F4,F5,F6,F7,F8,F9,A2,A3,A4,A5,A6,A7,A8,A9",pure_getters,keep_fargs=false,unsafe_comps,unsafe'
+# All options https://github.com/terser/terser/blob/master/README.md#compress-options
+compressOptions = 'pure_funcs="F2,F3,F4,F5,F6,F7,F8,F9,A2,A3,A4,A5,A6,A7,A8,A9",pure_getters,keep_fargs=false,unsafe_comps,unsafe'
 
 all: $(html) $(min) $(optimizedHtml)
 .phony: debug
@@ -20,7 +21,7 @@ $(optimizedHtml): $(templateHtml)
 
 
 $(min): $(js)
-	@yarn terser $< --compress $(pure_funcs) --mangle --output=$@
+	@yarn terser $< --compress $(compressOptions) --mangle --output=$@
 
 
 $(html) $(js): $(source)
