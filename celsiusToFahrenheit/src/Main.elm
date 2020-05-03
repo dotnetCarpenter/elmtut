@@ -5,6 +5,7 @@ import Html exposing (Html, div, span, input, text)
 import Html.Attributes exposing (value, style, placeholder, type_)
 import Html.Events exposing (onInput)
 import Round
+import Json.Encode as Encode
 
 import Debug
 
@@ -121,6 +122,11 @@ update msg model =
 
 -- VIEW
 
+-- add Error border around the input if its wrong
+-- add Fahrenheit to Celsius ✓
+-- add Celsius to Fahrenheit ✓
+-- add Inches to Meters ✓
+-- add Meters to Inches ✓
 
 view : Model -> Html Msg
 view model =
@@ -133,22 +139,23 @@ view model =
   ]
 
 viewConverter : ConversionValue -> (String -> msg) -> String -> String -> List (Html msg)
-viewConverter value msg p convertSymbol =
-  [ viewInput "text" value.input p msg
+viewConverter value msg placeholder convertSymbol =
+  [ viewInput "text" value.input value.error placeholder msg
     , span []
-    [ text " = "
+    [ text "= "
     , span [] [ text (Round.round 2 value.output)
     ]
     , text convertSymbol
     ]
   ]
 
-viewInput : String -> String -> String -> (String -> msg) -> Html msg
-viewInput t v p toMsg =
+viewInput : String -> String -> String -> String -> (String -> msg) -> Html msg
+viewInput t v e p toMsg =
   input [type_ t
   , value v
   , placeholder p
   , onInput toMsg
-  , Html.setCustomValidity ""
-  , style "width" "6em" ] []
+  , Html.Attributes.property "setCustomValidity" (Encode.string e)
+  , style "width" "6em"
+  , style "margin" "1em 1em 0" ] []
 

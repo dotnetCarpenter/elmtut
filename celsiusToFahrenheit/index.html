@@ -5674,12 +5674,20 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 			$elm$json$Json$Encode$string(string));
 	});
 var $elm$html$Html$Attributes$placeholder = $elm$html$Html$Attributes$stringProperty('placeholder');
+var $elm$virtual_dom$VirtualDom$property = F2(
+	function (key, value) {
+		return A2(
+			_VirtualDom_property,
+			_VirtualDom_noInnerHtmlOrFormAction(key),
+			_VirtualDom_noJavaScriptOrHtmlUri(value));
+	});
+var $elm$html$Html$Attributes$property = $elm$virtual_dom$VirtualDom$property;
 var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
 var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
 var $elm$html$Html$Attributes$type_ = $elm$html$Html$Attributes$stringProperty('type');
 var $elm$html$Html$Attributes$value = $elm$html$Html$Attributes$stringProperty('value');
-var $author$project$Main$viewInput = F4(
-	function (t, v, p, toMsg) {
+var $author$project$Main$viewInput = F5(
+	function (t, v, e, p, toMsg) {
 		return A2(
 			$elm$html$Html$input,
 			_List_fromArray(
@@ -5688,21 +5696,26 @@ var $author$project$Main$viewInput = F4(
 					$elm$html$Html$Attributes$value(v),
 					$elm$html$Html$Attributes$placeholder(p),
 					$elm$html$Html$Events$onInput(toMsg),
-					A2($elm$html$Html$Attributes$style, 'width', '6em')
+					A2(
+					$elm$html$Html$Attributes$property,
+					'setCustomValidity',
+					$elm$json$Json$Encode$string(e)),
+					A2($elm$html$Html$Attributes$style, 'width', '6em'),
+					A2($elm$html$Html$Attributes$style, 'margin', '1em 1em 0')
 				]),
 			_List_Nil);
 	});
 var $author$project$Main$viewConverter = F4(
-	function (value, msg, p, convertSymbol) {
+	function (value, msg, placeholder, convertSymbol) {
 		return _List_fromArray(
 			[
-				A4($author$project$Main$viewInput, 'text', value.input, p, msg),
+				A5($author$project$Main$viewInput, 'text', value.input, value.error, placeholder, msg),
 				A2(
 				$elm$html$Html$span,
 				_List_Nil,
 				_List_fromArray(
 					[
-						$elm$html$Html$text(' = '),
+						$elm$html$Html$text('= '),
 						A2(
 						$elm$html$Html$span,
 						_List_Nil,
