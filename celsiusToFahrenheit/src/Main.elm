@@ -21,6 +21,7 @@ main =
 type alias ConversionValue =
   { input : String
   , output : Float
+  , error : String
   }
 
 type alias Model =
@@ -31,7 +32,9 @@ type alias Model =
   }
 
 initialValue : ConversionValue
-initialValue = { input = "", output = 0.0 }
+initialValue = { input = ""
+               , output = 0.0
+               , error = "" }
 
 init : Model
 init =
@@ -68,26 +71,47 @@ type Msg
   | Meters String
   | Inches String
 
+type Error
+  = BadConversion
 
 convertToFloat : String -> Float
 convertToFloat v =
   Maybe.withDefault 0.0 (String.toFloat v)
 
+updateValidation : String -> Result Error Float
+updateValidation maybe =
+  case String.toFloat maybe of
+    Nothing ->
+      Err BadConversion
+
+    Just v ->
+      Ok v
 
 update : Msg -> Model -> Model
 update msg model =
   case msg of
-    Celsius v ->
-      { model | celsius = ConversionValue v (toFahrenheit (convertToFloat v)) }
+    Celsius value ->
+      let
+        result = updateValidation value
+      in
+        if result == Err BadConversion then
+          { model | celsius = ConversionValue value 0.0 "Not a Float" }
+        else {- if result == Ok value then -}
+          { model | celsius = ConversionValue value (toFahrenheit (convertToFloat value)) "" }
+      -- \c -> case String.toFloat c of
+      --         Nothing ->
+      --           { model | celsius = ConversionValue value 0.0 "Not a Float" }
+      --         Just v ->
+      --           { model | celsius = ConversionValue value (toFahrenheit v) "" }
 
     Fahrenheit v ->
-      { model | fahrenheit = ConversionValue v (toCelsius (convertToFloat v)) }
+      { model | fahrenheit = ConversionValue v (toCelsius (convertToFloat v)) "" }
 
     Meters v ->
-      { model | meters = ConversionValue v (toInches (convertToFloat v)) }
+      { model | meters = ConversionValue v (toInches (convertToFloat v)) "" }
 
     Inches v ->
-      { model | inches = ConversionValue v (toMeters (convertToFloat v))}
+      { model | inches = ConversionValue v (toMeters (convertToFloat v)) "" }
 
 
 -- VIEW

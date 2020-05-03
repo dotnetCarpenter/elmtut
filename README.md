@@ -108,6 +108,7 @@ use `elm make src/Main.elm`.
 
 1. `elm-format` should suggest functions inside record updates. ![elm-format has no suggestions inside a record update](./image/no_suggestions_function.png)
 2. So updating records is not very nice. I seem to not be the only one thinking that: https://medium.com/elm-shorts/updating-nested-records-in-elm-15d162e80480
+3. After reading through chapter _Error Handling_, I really wish there was an example on how to make higher order functions.
 
 
 ----------------------------------------------------------

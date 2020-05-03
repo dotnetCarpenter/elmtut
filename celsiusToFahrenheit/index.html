@@ -4406,7 +4406,7 @@ var _Bitwise_shiftRightZfBy = F2(function(offset, a)
 {
 	return a >>> offset;
 });
-var $author$project$Main$initialValue = {input: '', output: 0.0};
+var $author$project$Main$initialValue = {error: '', input: '', output: 0.0};
 var $author$project$Main$init = {celsius: $author$project$Main$initialValue, fahrenheit: $author$project$Main$initialValue, inches: $author$project$Main$initialValue, meters: $author$project$Main$initialValue};
 var $elm$core$Basics$EQ = {$: 'EQ'};
 var $elm$core$Basics$GT = {$: 'GT'};
@@ -5218,9 +5218,10 @@ var $elm$browser$Browser$sandbox = function (impl) {
 			view: impl.view
 		});
 };
-var $author$project$Main$ConversionValue = F2(
-	function (input, output) {
-		return {input: input, output: output};
+var $author$project$Main$BadConversion = {$: 'BadConversion'};
+var $author$project$Main$ConversionValue = F3(
+	function (input, output, error) {
+		return {error: error, input: input, output: output};
 	});
 var $elm$core$String$toFloat = _String_toFloat;
 var $elm$core$Maybe$withDefault = F2(
@@ -5250,52 +5251,72 @@ var $author$project$Main$toInches = function (m) {
 var $author$project$Main$toMeters = function (n) {
 	return n / 39.37;
 };
+var $author$project$Main$updateValidation = function (maybe) {
+	var _v0 = $elm$core$String$toFloat(maybe);
+	if (_v0.$ === 'Nothing') {
+		return $elm$core$Result$Err($author$project$Main$BadConversion);
+	} else {
+		var v = _v0.a;
+		return $elm$core$Result$Ok(v);
+	}
+};
 var $author$project$Main$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
 			case 'Celsius':
-				var v = msg.a;
-				return _Utils_update(
+				var value = msg.a;
+				var result = $author$project$Main$updateValidation(value);
+				return _Utils_eq(
+					result,
+					$elm$core$Result$Err($author$project$Main$BadConversion)) ? _Utils_update(
 					model,
 					{
-						celsius: A2(
+						celsius: A3($author$project$Main$ConversionValue, value, 0.0, 'Not a Float')
+					}) : _Utils_update(
+					model,
+					{
+						celsius: A3(
 							$author$project$Main$ConversionValue,
-							v,
+							value,
 							$author$project$Main$toFahrenheit(
-								$author$project$Main$convertToFloat(v)))
+								$author$project$Main$convertToFloat(value)),
+							'')
 					});
 			case 'Fahrenheit':
 				var v = msg.a;
 				return _Utils_update(
 					model,
 					{
-						fahrenheit: A2(
+						fahrenheit: A3(
 							$author$project$Main$ConversionValue,
 							v,
 							$author$project$Main$toCelsius(
-								$author$project$Main$convertToFloat(v)))
+								$author$project$Main$convertToFloat(v)),
+							'')
 					});
 			case 'Meters':
 				var v = msg.a;
 				return _Utils_update(
 					model,
 					{
-						meters: A2(
+						meters: A3(
 							$author$project$Main$ConversionValue,
 							v,
 							$author$project$Main$toInches(
-								$author$project$Main$convertToFloat(v)))
+								$author$project$Main$convertToFloat(v)),
+							'')
 					});
 			default:
 				var v = msg.a;
 				return _Utils_update(
 					model,
 					{
-						inches: A2(
+						inches: A3(
 							$author$project$Main$ConversionValue,
 							v,
 							$author$project$Main$toMeters(
-								$author$project$Main$convertToFloat(v)))
+								$author$project$Main$convertToFloat(v)),
+							'')
 					});
 		}
 	});
