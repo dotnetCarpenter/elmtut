@@ -2,7 +2,7 @@ module Main exposing (main)
 
 import Browser
 import Html exposing (Html, div, span, input, text)
-import Html.Attributes exposing (value, placeholder, style, type_)
+import Html.Attributes exposing (value, style, type_)
 import Html.Events exposing (onInput)
 import Round
 
@@ -24,9 +24,7 @@ type alias ConversionValue =
   }
 
 type alias Model =
-  { fahrenheit: ConversionValue
-  , celsius: ConversionValue
-  , inches: ConversionValue
+  { celsius: ConversionValue
   , meters: ConversionValue
   }
 
@@ -35,9 +33,7 @@ initialValue = { input = "", output = 0.0 }
 
 init : Model
 init =
-  { fahrenheit = initialValue
-  , celsius = initialValue
-  , inches = initialValue
+  { celsius = initialValue
   , meters = initialValue
   }
 
@@ -84,14 +80,13 @@ update msg model =
   case msg of
     Celsius v ->
       { model |
-        celsius =  updateInput model.celsius v
-      , fahrenheit = updateOutput model.fahrenheit (toFahrenheit (convertToFloat v))
+        celsius = updateInput model.celsius v
+      , celsius = updateOutput model.celsius toFahrenheit (convertToFloat v)
       }
 
     Fahrenheit v ->
       { model |
         celsius = updateOutput model.celsius (toCelsius (convertToFloat v))
-      , fahrenheit =  updateInput model.fahrenheit v
       }
 
 

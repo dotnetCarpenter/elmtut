@@ -88,6 +88,7 @@ checkPower powerLevel =
 1. Exercise 1 in https://guide.elm-lang.org/error_handling/maybe.html is missing `module Main exposing (..)`
 and won't compile. Similar to 9. on Day 1. Is this new in 0.19?
 
+
 ## Day 4
 
 1. ~~In the _maybe.html_ excersise , when hovering over `celsius` in `Just celsius`,
@@ -100,7 +101,13 @@ for that variable? But at least the compiler knows and will throw if I use `cels
 is unused? Should I use it more?
 4. Understand now that `elm reactor`, while it compiles `Main.elm` it does **not** generate a new `index.html`. For that
 use `elm make src/Main.elm`.
-5. Custon code folding support in `elm-format` would be nice. Ala https://marketplace.visualstudio.com/items?itemName=maptz.regionfolder
+5. Custom code folding support in `elm-format` would be nice. Ala https://marketplace.visualstudio.com/items?itemName=maptz.regionfolder
+
+
+## Day 5
+
+1. `elm-format` should suggest functions inside record updates. ![elm-format has no suggestions inside a record update](./image/no_suggestions_function.png)
+2. So updating records is not very nice. I seem to not be the only one thinking that: https://medium.com/elm-shorts/updating-nested-records-in-elm-15d162e80480
 
 
 ----------------------------------------------------------
