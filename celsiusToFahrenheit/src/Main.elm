@@ -7,7 +7,7 @@ import Html.Events exposing (onInput)
 import Round
 -- import Json.Encode as Encode
 
-import Debug
+-- import Debug
 
 -- MAIN
 
@@ -122,7 +122,7 @@ update msg model =
 
 -- VIEW
 
--- add Error border around the input if its wrong
+-- add Error border around the input if its wrong ✓
 -- add Fahrenheit to Celsius ✓
 -- add Celsius to Fahrenheit ✓
 -- add Inches to Meters ✓
@@ -135,7 +135,7 @@ view model =
   , Html.form [] (viewConverter model.fahrenheit Fahrenheit "Fahrenheit" "°C")
   , Html.form [] (viewConverter model.meters Meters "Meters" "“")
   , Html.form [] (viewConverter model.inches Inches "Inches" "m")
-  , Html.form [] [ text (Debug.toString model) ]
+  -- , Html.form [] [ text (Debug.toString model) ]
   ]
 
 viewConverter : ConversionValue -> (String -> msg) -> String -> String -> List (Html msg)
@@ -156,7 +156,7 @@ viewInput t v e p toMsg =
   , placeholder p
   , onInput toMsg
   -- , Html.Attributes.property "setCustomValidity" (Encode.string e)
-  , if String.length e > 0 then style "border-color" "red" |> Debug.log e else style "border-color" "inherit" |> Debug.log e
+  , if String.length e > 0 then style "border-color" "red" else style "border-color" "unset"
   , style "width" "6em"
   , style "margin" "1em 1em 0" ] []
 
