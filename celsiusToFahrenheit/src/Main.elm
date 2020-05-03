@@ -4,6 +4,7 @@ import Browser
 import Html exposing (Html, div, span, input, text)
 import Html.Attributes exposing (value, placeholder, style, type_)
 import Html.Events exposing (onInput)
+import Round
 
 import Debug
 
@@ -17,20 +18,27 @@ main =
 
 -- MODEL
 
-type alias Model =
-  { fahrenheit: Float
-  , celsius: Float
-  , inches: Float
-  , meters: Float
+type alias ConversionValue =
+  { input : String
+  , output : Float
   }
 
+type alias Model =
+  { fahrenheit: ConversionValue
+  , celsius: ConversionValue
+  , inches: ConversionValue
+  , meters: ConversionValue
+  }
+
+initialValue : ConversionValue
+initialValue = { input = "", output = 0.0 }
 
 init : Model
 init =
-  { fahrenheit = 0.0
-  , celsius = 0.0
-  , inches = 0.0
-  , meters = 0.0
+  { fahrenheit = initialValue
+  , celsius = initialValue
+  , inches = initialValue
+  , meters = initialValue
   }
 
 
@@ -40,7 +48,7 @@ toFahrenheit n =
 
 toCelsius : Float -> Float
 toCelsius n =
-  n / 1.8 - 32
+  (n - 32) / 1.8
 
 toMeters : Float -> Float
 toMeters n =
@@ -59,66 +67,33 @@ type Msg
   | Fahrenheit String
 
 
-debugMsg : a -> b -> a
-debugMsg o msg = o |> Debug.log (Debug.toString msg)
+convertToFloat : String -> Float
+convertToFloat v =
+  Maybe.withDefault 0.0 (String.toFloat v)
 
-debug : a -> a
-debug o = o |> Debug.log (Debug.toString o)
+updateInput : ConversionValue -> String -> ConversionValue
+updateInput slice value =
+  { slice | input = value }
 
-
-
--- updateInput : ConversionValue -> String -> ConversionValue
--- updateInput slice input =
---   { slice | input = input }
-
--- updateOutput : ConversionValue -> Float -> ConversionValue
--- updateOutput slice output =
---   { slice | output = output }
-
-
--- updateConversion : Model -> ConversionValue -> Model
--- updateConversion model value =
---   case String.toFloat value.input of
---     Just float ->
---       { model | fahrenheit = updateOutput model.fahrenheit (toFahrenheit float) }
-
---     Nothing ->
---       model
+updateOutput : ConversionValue -> Float -> ConversionValue
+updateOutput slice value =
+  { slice | output = value }
 
 update : Msg -> Model -> Model
 update msg model =
   case msg of
     Celsius v ->
-      { model | celsius =  (Maybe.withDefault 0.0 (String.toFloat v)), fahrenheit = toFahrenheit (Maybe.withDefault 0.0 (String.toFloat v))}
+      { model |
+        celsius =  updateInput model.celsius v
+      , fahrenheit = updateOutput model.fahrenheit (toFahrenheit (convertToFloat v))
+      }
 
-    Fahrenheit _ -> Debug.todo "Not implemented"
+    Fahrenheit v ->
+      { model |
+        celsius = updateOutput model.celsius (toCelsius (convertToFloat v))
+      , fahrenheit =  updateInput model.fahrenheit v
+      }
 
-    -- Celsius newInput ->
-    --   updateConversion
-    --     { model | celsius = updateInput model.celsius newInput, fahrenheit = updateOutput model.fahrenheit (Maybe.withDefault 0 (String.toFloat newInput))  }
-    --     model.celsius
-    --   -- updateConversion msg { model.celsius | input = newInput }
-    --   -- debug model newInput
-
-    -- Fahrenheit _ -> Debug.todo "Not implemented"
-
-  -- case msg of
-  --   Celsius newInput ->
-  --     case String.toFloat newInput of
-  --       Just float ->
-  --         { model | input = newInput, fahrenheit | output = toFahrenheit float, celsius = float }
-
-  --       Nothing ->
-  --         { model | input = newInput }
-
-
-  --   Fahrenheit newInput ->
-  --     case String.toFloat newInput of
-  --       Just float ->
-  --         { model | input = newInput, fahrenheit = float, celsius = toCelsius float }
-
-  --       Nothing ->
-  --         { model | input = newInput }
 
 
 -- VIEW
@@ -127,17 +102,17 @@ update msg model =
 view : Model -> Html Msg
 view model =
   div [] [
-    div [] [ text (Debug.toString model) ]
-  , div [] (viewConverter model.celsius Celsius "°C")
+    div [] (viewConverter model.celsius Celsius "°C")
   , div [] (viewConverter model.fahrenheit Fahrenheit "°F")
+  , div [] [ text (Debug.toString model) ]
   ]
 
-viewConverter : Float -> (String -> msg) -> String -> List (Html msg)
+viewConverter : ConversionValue -> (String -> msg) -> String -> List (Html msg)
 viewConverter value msg symbol =
-  [ viewInput "text" (String.fromFloat value) msg
+  [ viewInput "text" value.input msg
     , span []
     [ text (symbol ++ " = ")
-      , text (String.fromFloat value)
+      , text (Round.round 2 value.output)
     ]
   ]
 
