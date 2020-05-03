@@ -156,7 +156,7 @@ viewInput t v e p toMsg =
   , placeholder p
   , onInput toMsg
   -- , Html.Attributes.property "setCustomValidity" (Encode.string e)
-  , if String.length e > 0 then style "border-color" "red" |> Debug.log e else style "border-color" "auto" |> Debug.log e
+  , if String.length e > 0 then style "border-color" "red" |> Debug.log e else style "border-color" "inherit" |> Debug.log e
   , style "width" "6em"
   , style "margin" "1em 1em 0" ] []
 
