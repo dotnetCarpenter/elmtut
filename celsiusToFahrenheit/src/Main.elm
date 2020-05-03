@@ -1,8 +1,8 @@
 module Main exposing (main)
 
 import Browser
-import Html exposing (Html, div, span, input, text)
-import Html.Attributes exposing (value, style, placeholder, type_)
+import Html exposing (Html, Attribute, div, span, input, text)
+import Html.Attributes exposing (value, style, placeholder, type_, title, autofocus)
 import Html.Events exposing (onInput)
 import Round
 -- import Json.Encode as Encode
@@ -93,28 +93,28 @@ update msg model =
   case msg of
     Celsius value ->
       if updateValidation value == Err BadConversion then
-        { model | celsius = ConversionValue value 0.0 "Not a Float" }
+        { model | celsius = ConversionValue value 0.0 (value ++ " is not a Float") }
       else
         { model | celsius = ConversionValue value (toFahrenheit (convertToFloat value)) "" }
 
 
     Fahrenheit value ->
       if updateValidation value == Err BadConversion then
-        { model | fahrenheit = ConversionValue value 0.0 "Not a Float" }
+        { model | fahrenheit = ConversionValue value 0.0 (value ++ " is not a Float") }
       else
         { model | fahrenheit = ConversionValue value (toCelsius (convertToFloat value)) "" }
 
 
     Meters value ->
       if updateValidation value == Err BadConversion then
-        { model | meters = ConversionValue value 0.0 "Not a Float" }
+        { model | meters = ConversionValue value 0.0 (value ++ " is not a Float") }
       else
         { model | meters = ConversionValue value (toInches (convertToFloat value)) "" }
 
 
     Inches value ->
       if updateValidation value == Err BadConversion then
-        { model | inches = ConversionValue value 0.0 "Not a Float" }
+        { model | inches = ConversionValue value 0.0 (value ++ " is not a Float") }
       else
         { model | inches = ConversionValue value (toMeters (convertToFloat value)) "" }
 
@@ -131,16 +131,16 @@ update msg model =
 view : Model -> Html Msg
 view model =
   div [] [
-    Html.form [] (viewConverter model.celsius Celsius "Celsius" "°F")
-  , Html.form [] (viewConverter model.fahrenheit Fahrenheit "Fahrenheit" "°C")
-  , Html.form [] (viewConverter model.meters Meters "Meters" "“")
-  , Html.form [] (viewConverter model.inches Inches "Inches" "m")
+    Html.form [] (viewConverter model.celsius Celsius "Celsius" "°F" True)
+  , Html.form [] (viewConverter model.fahrenheit Fahrenheit "Fahrenheit" "°C" False)
+  , Html.form [] (viewConverter model.meters Meters "Meters" "“" False)
+  , Html.form [] (viewConverter model.inches Inches "Inches" "m" False)
   -- , Html.form [] [ text (Debug.toString model) ]
   ]
 
-viewConverter : ConversionValue -> (String -> msg) -> String -> String -> List (Html msg)
-viewConverter value msg placeholder convertSymbol =
-  [ viewInput "text" value.input value.error placeholder msg
+viewConverter : ConversionValue -> (String -> msg) -> String -> String -> Bool -> List (Html msg)
+viewConverter value msg placeholder convertSymbol autofocus =
+  [ viewInput "text" value.input value.error placeholder autofocus msg
     , span []
     [ text "= "
     , span [] [ text (Round.round 2 value.output)
@@ -149,14 +149,28 @@ viewConverter value msg placeholder convertSymbol =
     ]
   ]
 
-viewInput : String -> String -> String -> String -> (String -> msg) -> Html msg
-viewInput t v e p toMsg =
-  input [type_ t
-  , value v
-  , placeholder p
-  , onInput toMsg
-  -- , Html.Attributes.property "setCustomValidity" (Encode.string e)
-  , if String.length e > 0 then style "border-color" "red" else style "border-color" "unset"
-  , style "width" "6em"
-  , style "margin" "1em 1em 0" ] []
+viewInput : String -> String -> String -> String -> Bool -> (String -> msg) -> Html msg
+viewInput t v e p auto toMsg =
+  input
+    (List.append [
+      type_ t
+    , value v
+    , placeholder p
+    , autofocus auto
+    , onInput toMsg
+    -- , Html.Attributes.property "setCustomValidity" (Encode.string e)
+    , style "width" "6em"
+    , style "margin" "1em 1em 0" ]
 
+      (viewInputError e)
+    )
+  []
+
+viewInputError : String -> List (Attribute msg)
+viewInputError errMsg =
+  if String.length errMsg > 0 then
+    [ style "border-color" "red"
+    , title errMsg
+    ]
+  else
+    [ style "border-color" "unset" ]
