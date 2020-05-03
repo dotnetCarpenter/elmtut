@@ -91,27 +91,32 @@ update : Msg -> Model -> Model
 update msg model =
   case msg of
     Celsius value ->
-      let
-        result = updateValidation value
-      in
-        if result == Err BadConversion then
-          { model | celsius = ConversionValue value 0.0 "Not a Float" }
-        else {- if result == Ok value then -}
-          { model | celsius = ConversionValue value (toFahrenheit (convertToFloat value)) "" }
-      -- \c -> case String.toFloat c of
-      --         Nothing ->
-      --           { model | celsius = ConversionValue value 0.0 "Not a Float" }
-      --         Just v ->
-      --           { model | celsius = ConversionValue value (toFahrenheit v) "" }
+      if updateValidation value == Err BadConversion then
+        { model | celsius = ConversionValue value 0.0 "Not a Float" }
+      else
+        { model | celsius = ConversionValue value (toFahrenheit (convertToFloat value)) "" }
 
-    Fahrenheit v ->
-      { model | fahrenheit = ConversionValue v (toCelsius (convertToFloat v)) "" }
 
-    Meters v ->
-      { model | meters = ConversionValue v (toInches (convertToFloat v)) "" }
+    Fahrenheit value ->
+      if updateValidation value == Err BadConversion then
+        { model | fahrenheit = ConversionValue value 0.0 "Not a Float" }
+      else
+        { model | fahrenheit = ConversionValue value (toCelsius (convertToFloat value)) "" }
 
-    Inches v ->
-      { model | inches = ConversionValue v (toMeters (convertToFloat v)) "" }
+
+    Meters value ->
+      if updateValidation value == Err BadConversion then
+        { model | meters = ConversionValue value 0.0 "Not a Float" }
+      else
+        { model | meters = ConversionValue value (toInches (convertToFloat value)) "" }
+
+
+    Inches value ->
+      if updateValidation value == Err BadConversion then
+        { model | inches = ConversionValue value 0.0 "Not a Float" }
+      else
+        { model | inches = ConversionValue value (toMeters (convertToFloat value)) "" }
+
 
 
 -- VIEW
@@ -144,5 +149,6 @@ viewInput t v p toMsg =
   , value v
   , placeholder p
   , onInput toMsg
+  , Html.setCustomValidity ""
   , style "width" "6em" ] []
 

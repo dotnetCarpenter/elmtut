@@ -5265,9 +5265,8 @@ var $author$project$Main$update = F2(
 		switch (msg.$) {
 			case 'Celsius':
 				var value = msg.a;
-				var result = $author$project$Main$updateValidation(value);
 				return _Utils_eq(
-					result,
+					$author$project$Main$updateValidation(value),
 					$elm$core$Result$Err($author$project$Main$BadConversion)) ? _Utils_update(
 					model,
 					{
@@ -5283,39 +5282,57 @@ var $author$project$Main$update = F2(
 							'')
 					});
 			case 'Fahrenheit':
-				var v = msg.a;
-				return _Utils_update(
+				var value = msg.a;
+				return _Utils_eq(
+					$author$project$Main$updateValidation(value),
+					$elm$core$Result$Err($author$project$Main$BadConversion)) ? _Utils_update(
+					model,
+					{
+						fahrenheit: A3($author$project$Main$ConversionValue, value, 0.0, 'Not a Float')
+					}) : _Utils_update(
 					model,
 					{
 						fahrenheit: A3(
 							$author$project$Main$ConversionValue,
-							v,
+							value,
 							$author$project$Main$toCelsius(
-								$author$project$Main$convertToFloat(v)),
+								$author$project$Main$convertToFloat(value)),
 							'')
 					});
 			case 'Meters':
-				var v = msg.a;
-				return _Utils_update(
+				var value = msg.a;
+				return _Utils_eq(
+					$author$project$Main$updateValidation(value),
+					$elm$core$Result$Err($author$project$Main$BadConversion)) ? _Utils_update(
+					model,
+					{
+						meters: A3($author$project$Main$ConversionValue, value, 0.0, 'Not a Float')
+					}) : _Utils_update(
 					model,
 					{
 						meters: A3(
 							$author$project$Main$ConversionValue,
-							v,
+							value,
 							$author$project$Main$toInches(
-								$author$project$Main$convertToFloat(v)),
+								$author$project$Main$convertToFloat(value)),
 							'')
 					});
 			default:
-				var v = msg.a;
-				return _Utils_update(
+				var value = msg.a;
+				return _Utils_eq(
+					$author$project$Main$updateValidation(value),
+					$elm$core$Result$Err($author$project$Main$BadConversion)) ? _Utils_update(
+					model,
+					{
+						inches: A3($author$project$Main$ConversionValue, value, 0.0, 'Not a Float')
+					}) : _Utils_update(
 					model,
 					{
 						inches: A3(
 							$author$project$Main$ConversionValue,
-							v,
+							value,
 							$author$project$Main$toMeters(
-								$author$project$Main$convertToFloat(v)),
+								$author$project$Main$convertToFloat(value)),
 							'')
 					});
 		}
