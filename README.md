@@ -8,6 +8,7 @@ TOC
 1. [Day 2](#Day-2)
 1. [Day 3](#Day-3)
 1. [Day 4](#Day-4)
+1. [Day 5](#Day-5)
 1. [dead code elimination](#dead-code-elimination)
 1. [backend](#backend)
 
