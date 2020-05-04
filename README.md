@@ -158,4 +158,7 @@ Seems that the `elm reactor` server is written in Haskell https://github.com/elm
 
 ## examples
 
-1. [SSCCE for the entire Elm syntax](https://discourse.elm-lang.org/t/sscce-for-the-entire-elm-syntax/5691) https://ellie-app.com/8L4N579KBM5a1
+1. [SSCCE for the entire Elm syntax](https://ellie-app.com/8L4N579KBM5a1) -
+https://discourse.elm-lang.org/t/sscce-for-the-entire-elm-syntax/5691
+2. [setCustomValidity](https://ellie-app.com/8LRLRwvW4wXa1) -
+https://discourse.elm-lang.org/t/calling-dom-methods-from-elm/5701/
