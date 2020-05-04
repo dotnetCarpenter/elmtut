@@ -58,7 +58,7 @@ joy, but it does not work for *forms/src/Main.elm* hmm :sad: - restart vscode!
 
 ## Day 2
 
-1. How does reactivity work? Created *why/src/Main.elm* to understand.
+1. How does reactivity work? Created *[why/src/Main.elm](https://github.com/dotnetCarpenter/elmtut/blob/7ad688c32135cd6603d7e88d32fb7f41ab434a0e/why/src/Main.elm)* to understand.
 2. What is lower case types? E.i. `(String -> msg) -> Html msg`. Hint:
 This `text` call produces: `Html msg`.
 ```
@@ -113,7 +113,7 @@ use `elm make src/Main.elm`.
 2. So updating records is not very nice. I seem to not be the only one thinking that: https://medium.com/elm-shorts/updating-nested-records-in-elm-15d162e80480
 3. After reading through chapter _Error Handling_, I really wish there was an example on how to make higher order functions.
 EDIT: Found out, one simply have to add the types for the variables and output in parentheses, just like any other
-function. Eg. `(a -> a)` See *why/src/HigherOrder.elm*
+function. Eg. `(a -> a)` See [applyTwice in *why/src/HigherOrder.elm*](https://github.com/dotnetCarpenter/elmtut/blob/55a0dc193b831bfb489ad6b8560a4ec6884bf7ac/why/src/HigherOrder.elm).
 4. Found an article on [tricks with case statements](https://medium.com/elm-shorts/tricks-with-case-statements-in-elm-80223b85484f) which might be useful once I get a little deeper into Elm.
 5. So `Result` is only for [pattern matching](https://stackoverflow.com/questions/40953537/how-do-i-check-if-a-result-is-ok-or-err-in-elm) it seems. I thought I could get the `Ok` value out [somehow](https://github.com/dotnetCarpenter/elmtut/commit/9cc2b0bc46244a7af650f21d97d78f96c22a32be).
 6. Setting up `terser` for *celsiusToFahrenheit*.. Reveals that the following functions are unused (escaped DCE):
