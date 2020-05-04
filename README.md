@@ -112,12 +112,15 @@ use `elm make src/Main.elm`.
 1. `elm-format` should suggest functions inside record updates. ![elm-format has no suggestions inside a record update](./image/no_suggestions_function.png)
 2. So updating records is not very nice. I seem to not be the only one thinking that: https://medium.com/elm-shorts/updating-nested-records-in-elm-15d162e80480
 3. After reading through chapter _Error Handling_, I really wish there was an example on how to make higher order functions.
+EDIT: Found out, one simply have to add the types for the variables and output in parentheses, just like any other
+function. Eg. `(a -> a)` See *why/src/HigherOrder.elm*
 4. Found an article on [tricks with case statements](https://medium.com/elm-shorts/tricks-with-case-statements-in-elm-80223b85484f) which might be useful once I get a little deeper into Elm.
 5. So `Result` is only for [pattern matching](https://stackoverflow.com/questions/40953537/how-do-i-check-if-a-result-is-ok-or-err-in-elm) it seems. I thought I could get the `Ok` value out [somehow](https://github.com/dotnetCarpenter/elmtut/commit/9cc2b0bc46244a7af650f21d97d78f96c22a32be).
 6. Setting up `terser` for *celsiusToFahrenheit*.. Reveals that the following functions are unused (escaped DCE):
 `_Json_runArrayDecoder`, `_Scheduler_binding`, `_Scheduler_spawn`, `_VirtualDom_addClass`
 , `_VirtualDom_applyAttrs`, `_VirtualDom_applyAttrsNS`, `_VirtualDom_diffKeyedKids`
-, `_VirtualDom_insertNode` and `_VirtualDom_removeNode`. See [commit d2b07ce](https://github.com/dotnetCarpenter/elmtut/commit/d2b07ce).
+, `_VirtualDom_insertNode` and `_VirtualDom_removeNode`. See [commit d2b07ce](https://github.com/dotnetCarpenter/elmtut/commit/d2b07ce). With this simple program, we are down to 22.9% unused code. **Coverage 77.1%!**
+
 
 
 ----------------------------------------------------------
@@ -152,3 +155,7 @@ Also [this article](https://medium.com/better-programming/reducing-js-bundle-siz
 ## backend
 
 Seems that the `elm reactor` server is written in Haskell https://github.com/elm/compiler/tree/master/builder/src
+
+## examples
+
+1. [SSCCE for the entire Elm syntax](https://discourse.elm-lang.org/t/sscce-for-the-entire-elm-syntax/5691) https://ellie-app.com/8L4N579KBM5a1
