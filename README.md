@@ -1,7 +1,7 @@
 # Initial thoughts for improvement
 _and Elm notes in general_
 
-This learning experiance has been posted to https://discourse.elm-lang.org/t/first-24-hours-with-elm/5663.
+This learning experience has been posted to https://discourse.elm-lang.org/t/first-24-hours-with-elm/5663.
 
 TOC
 1. [Day 1](#Day-1)
