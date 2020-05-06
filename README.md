@@ -9,6 +9,7 @@ TOC
 1. [Day 3](#Day-3)
 1. [Day 4](#Day-4)
 1. [Day 5](#Day-5)
+1. [Day 6](#Day-6)
 1. [dead code elimination](#dead-code-elimination)
 1. [backend](#backend)
 
@@ -121,6 +122,10 @@ function. Eg. `(a -> a)` See [applyTwice in *why/src/HigherOrder.elm*](https://g
 , `_VirtualDom_applyAttrs`, `_VirtualDom_applyAttrsNS`, `_VirtualDom_diffKeyedKids`
 , `_VirtualDom_insertNode` and `_VirtualDom_removeNode`. See [commit d2b07ce](https://github.com/dotnetCarpenter/elmtut/commit/d2b07ce). With this simple program, we are down to 22.9% unused code. **Coverage 77.1%!**
 
+
+## Day 6
+
+1. Realised how `update` and `view` is related and why the signature has to be that way. See [why/src/UpdateReturn.elm](./why/src/UpdateReturn.elm).
 
 
 ----------------------------------------------------------
