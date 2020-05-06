@@ -10,7 +10,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Http
-import Json.Decode exposing (Decoder, field, string)
+import Json.Decode exposing (Decoder, map2, field, string)
 
 
 
@@ -29,11 +29,15 @@ main =
 
 -- MODEL
 
+type alias Giphy =
+    { url : String
+    , title : String
+    }
 
 type Model
   = Failure
   | Loading
-  | Success String
+  | Success Giphy
 
 
 init : () -> (Model, Cmd Msg)
@@ -47,7 +51,7 @@ init _ =
 
 type Msg
   = MorePlease
-  | GotGif (Result Http.Error String)
+  | GotGif (Result Http.Error Giphy)
 
 
 update : Msg -> Model -> (Model, Cmd Msg)
@@ -58,8 +62,8 @@ update msg model =
 
     GotGif result ->
       case result of
-        Ok url ->
-          (Success url, Cmd.none)
+        Ok giphy ->
+          (Success giphy, Cmd.none)
 
         Err _ ->
           (Failure, Cmd.none)
@@ -81,7 +85,7 @@ subscriptions model =
 view : Model -> Html Msg
 view model =
   div []
-    [ h2 [] [ text "Random Cats" ]
+    [ h1 [] [ text "Random Cats" ]
     , viewGif model
     ]
 
@@ -98,10 +102,11 @@ viewGif model =
     Loading ->
       text "Loading..."
 
-    Success url ->
+    Success giphy ->
       div []
         [ button [ onClick MorePlease, style "display" "block" ] [ text "More Please!" ]
-        , img [ src url ] []
+        , h2 [] [ text giphy.title ]
+        , img [ src giphy.url, alt giphy.title ] []
         ]
 
 
@@ -112,12 +117,15 @@ viewGif model =
 getRandomCatGif : Cmd Msg
 getRandomCatGif =
   Http.get
-    { url = "https://api.giphy.com/v1/gifs/random?api_key=BnJEoD8AocsTSCORiB1haCspkhqla81S&tag=cat&rating=G"
+    { url = "https://api.giphy.com/v1/gifs/random?api_key=BnJEoD8AocsTSCORiB1haCspkhqla81S&tag=cat"
     -- { url = "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=cat"
     , expect = Http.expectJson GotGif gifDecoder
     }
 
 
-gifDecoder : Decoder String
+gifDecoder : Decoder Giphy
 gifDecoder =
-  field "data" (field "image_url" string)
+  map2 Giphy
+    (field "data" (field "image_url" string))
+    (field "data" (field "title" string))
+  -- field "data" (field "image_url" string)
