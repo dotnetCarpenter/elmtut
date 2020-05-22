@@ -128,6 +128,10 @@ function. Eg. `(a -> a)` See [applyTwice in *why/src/HigherOrder.elm*](https://g
 1. Realised how `update` and `view` is related and why the signature has to be that way. See [why/src/UpdateReturn.elm](./why/src/UpdateReturn.elm).
 
 
+## Day 7
+1. Very little time but I manage to look at the first example at https://guide.elm-lang.org/effects/random.html
+2. I think I'm figuring out how to do type annotations.
+
 ----------------------------------------------------------
 
 ## dead code elimination

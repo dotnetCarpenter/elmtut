@@ -15,7 +15,7 @@ import Random
 
 -- MAIN
 
--- ? Not sure how to type this. main : Program -> flags -> model -> Msg is not working
+main : Program () Model Msg
 main =
   Browser.element
     { init = init
