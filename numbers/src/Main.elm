@@ -7,15 +7,15 @@
 module Main exposing (main)
 
 import Browser
-import Html exposing (..)
-import Html.Events exposing (..)
+import Html exposing (Html, div, h1, button, text)
+import Html.Events exposing (onClick)
 import Random
 
 
 
 -- MAIN
 
-
+-- ? Not sure how to type this. main : Program -> flags -> model -> Msg is not working
 main =
   Browser.element
     { init = init
@@ -29,14 +29,12 @@ main =
 -- MODEL
 
 
-type alias Model =
-  { dieFace : Int
-  }
+type alias Model = Int
 
 
 init : () -> (Model, Cmd Msg)
 init _ =
-  ( Model 1
+  ( 1
   , Cmd.none
   )
 
@@ -59,7 +57,7 @@ update msg model =
       )
 
     NewFace newFace ->
-      ( Model newFace
+      ( newFace
       , Cmd.none
       )
 
@@ -69,7 +67,7 @@ update msg model =
 
 
 subscriptions : Model -> Sub Msg
-subscriptions model =
+subscriptions _ =
   Sub.none
 
 
@@ -78,8 +76,8 @@ subscriptions model =
 
 
 view : Model -> Html Msg
-view model =
+view dieFace =
   div []
-    [ h1 [] [ text (String.fromInt model.dieFace) ]
+    [ h1 [] [ text (String.fromInt dieFace) ]
     , button [ onClick Roll ] [ text "Roll" ]
     ]
